@@ -2,11 +2,12 @@ package beans;
 
 import java.time.LocalTime;
 
+import enums.SportObjectType;
 import enums.StatusSportObject;
 
 public class SportObject {
 	private String name;
-	private String type;
+	private SportObjectType type;
 	private String content;
 	private StatusSportObject status;
 	private Location location;
@@ -17,7 +18,7 @@ public class SportObject {
 	public SportObject() {
 		
 	}
-	public SportObject(String name, String type, String content, StatusSportObject status, Location location,
+	public SportObject(String name, SportObjectType type, String content, StatusSportObject status, Location location,
 			double averageRating, LocalTime workTime) {
 		super();
 		this.name = name;
@@ -34,10 +35,10 @@ public class SportObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getType() {
+	public SportObjectType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(SportObjectType type) {
 		this.type = type;
 	}
 	public String getContent() {
