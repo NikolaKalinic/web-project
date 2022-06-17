@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,vuejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,vuejs
-
+src/Personal/PersonalConfig.java
 ### Eclipse ###
 .metadata
 bin/
