@@ -1,6 +1,8 @@
 package beans;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 	private int longitude;
 	private int latitude;
 	private Address address;

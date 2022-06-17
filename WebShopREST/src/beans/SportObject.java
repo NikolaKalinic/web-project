@@ -1,11 +1,13 @@
 package beans;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
 import enums.SportObjectType;
 import enums.StatusSportObject;
 
-public class SportObject {
+public class SportObject implements Serializable{
+	private int id;
 	private String name;
 	private SportObjectType type;
 	private String content;
@@ -13,13 +15,17 @@ public class SportObject {
 	private Location location;
 	//TODO LOGO
 	private double averageRating;
-	private LocalTime workTime;
+	private String workTime;
 	
 	public SportObject() {
 		
 	}
+	public SportObject(String name, String content) {
+		this.name = name;
+		this.content = content;
+	}
 	public SportObject(String name, SportObjectType type, String content, StatusSportObject status, Location location,
-			double averageRating, LocalTime workTime) {
+			double averageRating,String workTime) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -28,6 +34,13 @@ public class SportObject {
 		this.location = location;
 		this.averageRating = averageRating;
 		this.workTime = workTime;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -65,10 +78,10 @@ public class SportObject {
 	public void setAverageRating(double averageRating) {
 		this.averageRating = averageRating;
 	}
-	public LocalTime getWorkTime() {
+	public String getWorkTime() {
 		return workTime;
 	}
-	public void setWorkTime(LocalTime workTime) {
+	public void setWorkTime(String workTime) {
 		this.workTime = workTime;
 	}
 	

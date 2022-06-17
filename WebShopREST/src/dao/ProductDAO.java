@@ -115,6 +115,7 @@ public class ProductDAO {
 				catch (Exception e) { }
 			}
 		}
+	//TESTING
 		
 	}
 }
