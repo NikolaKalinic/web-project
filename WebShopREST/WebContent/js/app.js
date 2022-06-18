@@ -5,13 +5,12 @@ const SportsObjects = { template: '<sportsObjects></sportsObjects>' }
 const router = new VueRouter({
 	mode: 'hash',
 	  routes: [		
-		{ path: '/', name: 'home', component: Products},
+		{ path: '/', name: 'home', component: SportsObjects},
 	    { path: '/products/:id', component: Product},
-	    { path: '/sportsObjects', component: SportsObjects }
 	  ]
 });
 
 var app = new Vue({
 	router,
-	el: '#products'
+	el: '#sportsObjects'
 });
