@@ -1,96 +1,70 @@
 package dao;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+
+import java.util.ArrayList;
 
 import beans.User;
+import fileHandler.GenericFileHandler;
 
-/***
- * <p>Klasa namenjena da uèita korisnike iz fajla i pruža operacije nad njima (poput pretrage).
- * Korisnici se nalaze u fajlu WebContent/users.txt u obliku: <br>
- * firstName;lastName;email;username;password</p>
- * <p><b>NAPOMENA:</b> Lozinke se u praksi <b>nikada</b> ne snimaju u èistu tekstualnom obliku.</p>
- * @author Lazar
- *
- */
 public class UserDAO {
-	private Map<String, User> users = new HashMap<>();
+	private ArrayList<User> users;
+	private GenericFileHandler<User> fileHandler = new GenericFileHandler<User>();
 	
 	
-	public UserDAO() {
-		
-	}
-	
-	/***
-	 * @param contextPath Putanja do aplikacije u Tomcatu. Može se pristupiti samo iz servleta.
-	 */
 	public UserDAO(String contextPath) {
-		loadUsers(contextPath);
+		 try {
+			 users = fileHandler.load("users.txt");
+		 }catch(Exception e) {
+			 users = new ArrayList<>();
+		 }
 	}
 	
-	/**
-	 * Vraæa korisnika za prosleðeno korisnièko ime i šifru. Vraæa null ako korisnik ne postoji
-	 * @param username
-	 * @param password
-	 * @return
-	 */
+	public void create(User u) {
+		users.add(u);
+		fileHandler.save(users, "users.txt");
+	}
+	
+	public ArrayList<User> getAll(){
+		return users;
+	}
+	
+	public User getByUsername(String username) {
+		for(User u : users) {
+			if(u.getUsername() == username)
+				return u;
+		}
+		return null;
+	}
+	
+	public void deleteByUsername(String username) {
+		for(int i = 0; i<users.size();i++) {
+			if(users.get(i).getUsername() == username) {
+				users.remove(i);
+				fileHandler.save(users, "users.txt");
+			}
+		}
+	}
+	
 	public User find(String username, String password) {
-		if (!users.containsKey(username)) {
+		if(checkDoesExists(username)) {
+			User user = getByUsername(username);
+			if(user.getPassword().equals(password))
+				return user;
+			else
+				return null;
+		}else {
 			return null;
 		}
-		User user = users.get(username);
-		if (!user.getPassword().equals(password)) {
-			return null;
-		}
-		return user;
 	}
 	
-	public Collection<User> findAll() {
-		return users.values();
-	}
-	
-	/**
-	 * Uèitava korisnike iz WebContent/users.txt fajla i dodaje ih u mapu {@link #users}.
-	 * Kljuè je korisnièko ime korisnika.
-	 * @param contextPath Putanja do aplikacije u Tomcatu
-	 */
-	private void loadUsers(String contextPath) {
-		BufferedReader in = null;
-		try {
-			File file = new File(contextPath + "/users.txt");
-			in = new BufferedReader(new FileReader(file));
-			String line;
-			StringTokenizer st;
-			while ((line = in.readLine()) != null) {
-				line = line.trim();
-				if (line.equals("") || line.indexOf('#') == 0)
-					continue;
-				st = new StringTokenizer(line, ";");
-				while (st.hasMoreTokens()) {
-					String firstName = st.nextToken().trim();
-					String lastName = st.nextToken().trim();
-					String email = st.nextToken().trim();
-					String username = st.nextToken().trim();
-					String password = st.nextToken().trim();
-					users.put(username, new User(firstName, lastName, email, username, password));
-				}
-				
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				}
-				catch (Exception e) { }
+	private boolean checkDoesExists(String username) {
+		boolean exists = false;
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				exists=true;
 			}
 		}
+		return exists;
 	}
 	
 }
