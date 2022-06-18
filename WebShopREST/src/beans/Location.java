@@ -41,5 +41,11 @@ public class Location implements Serializable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	@Override
+	public String toString() {
+		return address.toString();
+	}
+	
 	
 }

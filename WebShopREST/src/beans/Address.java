@@ -7,16 +7,18 @@ public class Address implements Serializable {
 	private String number;
 	private String place;
 	private String zipCode;
+	private String state;
 	
 	public Address() {
 		
 	}
-	public Address(String street, String number, String place, String zipCode) {
+	public Address(String street, String number, String place, String zipCode, String state) {
 		super();
 		this.street = street;
 		this.number = number;
 		this.place = place;
 		this.zipCode = zipCode;
+		this.state = state;
 	}
 	public String getStreet() {
 		return street;
@@ -42,6 +44,17 @@ public class Address implements Serializable {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return place + ", " + state;
+	}
+	
 	
 	
 }

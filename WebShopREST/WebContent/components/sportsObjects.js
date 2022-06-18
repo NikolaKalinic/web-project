@@ -1,7 +1,8 @@
 Vue.component("sportsObjects", { 
 	data: function () {
 	    return {
-	      sportsObjects: null
+	      sportsObjects: null,
+	      searchQuery: ''
 	    }
 	},
 	    template: `
@@ -12,7 +13,8 @@ Vue.component("sportsObjects", {
 			  <a href="register.html">Sign up</a>
 			</div>
 	    	<div style="position: absolute;top: 30%;left: 30%;">
-	    		<h3>Prikaz sportskih objekata</h3>
+	    		<h3>Review of sport objects</h3>
+	    		<input type="text" v-model="searchQuery" placeholder="Search..." />
 	    		<table border="1">
 		    		<tr bgcolor="lightgrey">
 		    			<th>Name</th>
@@ -24,12 +26,12 @@ Vue.component("sportsObjects", {
 		    			<th>Work time</th>	
 		    		</tr>
 		    			
-		    		<tr v-for="so in sportsObjects">
+		    		<tr v-for="so in filteredResources">
 		    			<td>{{so.name}}</td>
-		    			<td>{{so.type}}</td>
 		    			<td>{{so.content}}</td>
+		    			<td>{{so.type}}</td>
 		    			<td>{{so.status}}</td>
-		    			<td>{{so.location}}</td>
+		    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
 		    			<td>{{so.averageRating}}</td>
 		    			<td>{{so.workTime}}</td>		
 		    		</tr>
@@ -41,6 +43,29 @@ Vue.component("sportsObjects", {
         axios
           .get('rest/objects/')
           .then(response => (this.sportsObjects = response.data))
+    },
+    computed: {
+    filteredResources (){
+      if(this.searchQuery){		
+      return this.sportsObjects.filter((item)=>{		
+		if(item.name.toLowerCase().startsWith(this.searchQuery.toLowerCase())){			
+			return item;
+		}else if (item.averageRating.toString().startsWith(this.searchQuery)){
+			return item;
+		}else if (item.content.toLowerCase().startsWith(this.searchQuery)){
+			return item;
+		}else if (item.location.address.state.toLowerCase().startsWith(this.searchQuery)){
+			return item;
+		}
+		else if (item.location.address.place.toLowerCase().startsWith(this.searchQuery)){
+			return item;
+		}
+      })
+      } else{
+        return this.sportsObjects;
+      }
     }
+  }
+   	
     
 });

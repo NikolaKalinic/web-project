@@ -1,7 +1,6 @@
 package beans;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 
 import enums.SportObjectType;
 import enums.StatusSportObject;
@@ -12,7 +11,7 @@ public class SportObject implements Serializable{
 	private SportObjectType type;
 	private String content;
 	private StatusSportObject status;
-	private Location location;
+	private Location location;	
 	//TODO LOGO
 	private double averageRating;
 	private String workTime;
@@ -33,7 +32,7 @@ public class SportObject implements Serializable{
 		this.status = status;
 		this.location = location;
 		this.averageRating = averageRating;
-		this.workTime = workTime;
+		this.workTime = workTime;		
 	}
 	
 	public int getId() {
@@ -84,6 +83,12 @@ public class SportObject implements Serializable{
 	public void setWorkTime(String workTime) {
 		this.workTime = workTime;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
