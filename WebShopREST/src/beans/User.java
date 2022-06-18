@@ -3,9 +3,9 @@ package beans;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
 import enums.Gender;
 import enums.Role;
-
 
 public class User implements Serializable {
 	
@@ -14,7 +14,7 @@ public class User implements Serializable {
 	private String firstName;
 	private String lastName;
 	private Gender gender;
-	private LocalDate dateOfBirth;
+	private String dateOfBirth;
 	private Role role;
 	private String email; //NIJE PO SPECIFIKACIJI
 	
@@ -30,8 +30,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public User(String username, String password, String firstName, String lastName, Gender gender,
-			LocalDate dateOfBirth, Role role) {
+	public User(String username, String password,String dateOfBirth, String firstName, String lastName, Gender gender,
+			 Role role,String email) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -40,6 +40,7 @@ public class User implements Serializable {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.role = role;
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -82,11 +83,11 @@ public class User implements Serializable {
 		this.gender = gender;
 	}
 
-	public LocalDate getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

@@ -30,7 +30,7 @@ public class UserDAO {
 	
 	public User getByUsername(String username) {
 		for(User u : users) {
-			if(u.getUsername() == username)
+			if(u.getUsername().equals(username))
 				return u;
 		}
 		return null;
@@ -38,7 +38,7 @@ public class UserDAO {
 	
 	public void deleteByUsername(String username) {
 		for(int i = 0; i<users.size();i++) {
-			if(users.get(i).getUsername() == username) {
+			if(users.get(i).getUsername().equals(username)) {
 				users.remove(i);
 				fileHandler.save(users, "users.txt");
 			}
