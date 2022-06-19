@@ -1,44 +1,15 @@
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <link rel="stylesheet" type="text/css" href="navStyle.css" />
-    <script src="jquery-3.3.1.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-      crossorigin="anonymous"
-    />
-         <script src="js/vue.js"></script>
-		<script src="js/vue-router.js"></script>
-		<script src="js/axios.js"></script>
-		<script src="js/registerCustomers.js" ></script>
-  </head>
-  <body>
-    <div class="topnav">
-      <a href="sportsObjects.html">Home</a>
-      <a href="login.html">Login</a>
-      <a class="active" href="register.html">Register</a>
-    </div>
-    <!--  <form id="forma">
-		<table>
-			<tr><td>Username</td><td><input type="text" name="username"></td></tr>
-			<tr><td>Password</td><td><input type="password" name="password"></td></tr>
-			<tr><td><input type="submit" value="Login"></td></tr>
-		</table>
-		<p id="error" hidden="true"></p>
-		<p id="success" hidden="true"></p>
-	</form>-->
+Vue.component("register", { 
+	data: function () {
+	    return {
+	    }
+	},
+	    template: ` 
+    	<div>	
+		 <div class="topnav">
+		      <a href="/web-project/#/">Home</a>
+		      <a href="/web-project/#/login">Login</a>
+		      <a class="active" href="/web-project/#/register">Register</a>
+    	</div>
     <section class="vh-100 gradient-custom">
       <div id="app" class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
@@ -217,17 +188,53 @@
             </div>
           </div>
         </div>
+    	</section>
       </div>
-    </section>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+      </div>
+    	`,
+    mounted () {
+        
+    },
+    methods: {
+    	/*addProduct : function() {
+    		router.push(`/products/-1`);
+    	},
+    	editProduct : function(id) {
+    		router.push(`/products/${id}`);
+    	},
+    	deleteProduct : function(id, index) {
+    		r = confirm("Are you sure?")
+    		if (r){
+	    		axios
+	            .delete('rest/products/' + id)
+	            .then(response => (this.products.splice(index, 1)))
+    		}
+    	} */
+    	async register() {
+            await axios.post(
+                "rest/users",
+                {
+                    username: this.username,
+                    password: this.password,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    gender: this.picked,
+                    dateOfBirth: this.dateOfBirth,
+                    role: "Customer",
+                    email: this.email
+                }
+            )
+            .then( response =>{
+               // window.location.href = 'sportsObjects.html';
+               router.push(`/login`);
+            })
+            .catch( error => {
+                this.error = 'Postoji korisnik sa datim korisnickim imenom';
+            })
+        },
+        
+        getFormValues (submitEvent) {
+            this.register();
+        }
+    }
+});

@@ -8,9 +8,9 @@ Vue.component("sportsObjects", {
 	    template: `
 	    <div> 
 	    	<div class="topnav">
-			  <a class="active" href="sportsObjects.html">Home</a>
-			  <a href="login.html">Login</a>
-			  <a href="register.html">Register</a>
+			  <a class="active" href="/web-project/#/">Home</a>
+			  <a href="/web-project/#/login">Login</a>
+			  <a href="/web-project/#/register">Register</a>
 			</div>
 	    	<div style="position: absolute;top: 30%;left: 30%;">
 	    		<h3>Review of sport objects</h3>
@@ -52,12 +52,12 @@ Vue.component("sportsObjects", {
 			return item;
 		}else if (item.averageRating.toString().startsWith(this.searchQuery)){
 			return item;
-		}else if (item.content.toLowerCase().startsWith(this.searchQuery)){
+		}else if (item.content.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
 			return item;
-		}else if (item.location.address.state.toLowerCase().startsWith(this.searchQuery)){
+		}else if (item.location.address.state.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
 			return item;
 		}
-		else if (item.location.address.place.toLowerCase().startsWith(this.searchQuery)){
+		else if (item.location.address.place.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
 			return item;
 		}
       })
