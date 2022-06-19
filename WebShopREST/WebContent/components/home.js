@@ -11,31 +11,44 @@ Vue.component("home", {
 			  <a class="active " href="/web-project/#/home">Home</a>
 			  <button type="button" class="btn btn-info text-right" v-on:click="logout()">Logout</button>
 			</div>
-	    	<div style="position: absolute;top: 30%;left: 30%;">
-	    		<h3>Review of sport objects</h3>
-	    		<input type="text" v-model="searchQuery" placeholder="Search..." />
-	    		<table border="1">
-		    		<tr bgcolor="lightgrey">
-		    			<th>Name</th>
-		    			<th>Type</th>
-		    			<th>Content</th>
-		    			<th>Status</th>
-		    			<th>Location</th>
-		    			<th>Average rating</th>	
-		    			<th>Work time</th>	
-		    		</tr>
-		    			
-		    		<tr v-for="so in filteredResources">
-		    			<td>{{so.name}}</td>
-		    			<td>{{so.content}}</td>
-		    			<td>{{so.type}}</td>
-		    			<td>{{so.status}}</td>
-		    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
-		    			<td>{{so.averageRating}}</td>
-		    			<td>{{so.workTime}}</td>		
-		    		</tr>
-		    	</table>    		
-	    	</div>
+	    	<div class="container">
+	    			<div class="row  align-items-center">
+	    				<div class="col-8 d-flex justify-content-center" >
+		    				<h2>Review of sport objects</h2>
+		    			</div>
+		    			<div class="col-4">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
+		    			</div>
+		    		</div>
+		    		<div class="row">
+		    			<div class="col">
+			    		<table class="table table-striped table-dark">
+			    			<thead>
+				    		<tr>
+				    			<th>Name</th>
+				    			<th>Type</th>
+				    			<th>Content</th>
+				    			<th>Status</th>
+				    			<th>Location</th>
+				    			<th>Average rating</th>	
+				    			<th>Work time</th>	
+				    		</tr>
+				    		</thead>
+				    		<tbody>
+				    		<tr v-for="so in filteredResources">
+				    			<td>{{so.name}}</td>
+				    			<td>{{so.content}}</td>
+				    			<td>{{so.type}}</td>
+				    			<td>{{so.status}}</td>
+				    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
+				    			<td>{{so.averageRating}}</td>
+				    			<td>{{so.workTime}}</td>		
+				    		</tr>
+				    		</tbody>
+				    	</table>    
+				    	</div>
+			    	</div>
+		    	</div>
     	</div>		  
     	`,
     mounted () {
