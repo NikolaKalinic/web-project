@@ -42,8 +42,13 @@ public class LoginService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		User loggedUser = userDao.find(user.getUsername(), user.getPassword());
-		if (loggedUser != null) {
+		String password = user.getPassword();
+		user = userDao.getByUsername(user.getUsername());
+		if(user == null) {
+			return Response.status(400).entity("Invalid username and/or password").build();
+		}
+		User loggedUser = userDao.find(user.getUsername(), password);
+		if (loggedUser == null) {
 			return Response.status(400).entity("Invalid username and/or password").build();
 		}
 		request.getSession().setAttribute("user", loggedUser);

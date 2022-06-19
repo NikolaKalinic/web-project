@@ -1,6 +1,8 @@
 Vue.component("login", { 
 	data: function () {
 	    return {
+			error:"You entered the wrong password or username.",
+			user:null
 	    }
 	},
 	    template: ` 
@@ -20,12 +22,13 @@ Vue.component("login", {
 	              <div class="text-center mt-3">
 	                    <h2>Sign in</h2>
 	                    <br>
+	                    <p id="err"style="color:red" hidden="true">{{error}}</p>
 	                </div>
-	                <form action="">
-	                  <input type="text" name="" id="" class="form-control my-4 py-2" placeholder="Username" />
-	                  <input type="password" name="" id="" class="form-control my-4 py-2" placeholder="Password" />
+	                <form @submit.prevent="getFormValues">
+	                  <input type="text" v-model="username" name="" id="" class="form-control my-4 py-2" placeholder="Username" />
+	                  <input type="password" v-model="password" name="" id="" class="form-control my-4 py-2" placeholder="Password" />
 	                  <div class="text-center mt-3">
-	                    <button class="btn btn-primary">Login</button>
+	                    <button class="btn btn-primary" v-on:click="login()">Login</button>
 	                    <a href="/web-project/#/register" class="nav-link">Create account</a>
 	                  </div>
 	                </form>
@@ -41,6 +44,26 @@ Vue.component("login", {
         
     },
     methods: {
+		login : function(){
+			if(typeof this.username === typeof undefined || typeof this.password === typeof undefined){
+				document.getElementById("err").hidden=false;
+			}else{
+				document.getElementById("err").hidden=true;
+				
+				axios
+				.post('rest/login',   
+                {
+                    username: this.username,
+                    password: this.password,
+                })
+				.then(response => {if(response.status != 200) document.getElementById("err").hidden=false; else router.push(`/home`);})
+				.catch(document.getElementById("err").hidden=false);
+			}
+		},
+		
+		getFormValues (submitEvent) {
+            this.login();
+        }
     	/*addProduct : function() {
     		router.push(`/products/-1`);
     	},

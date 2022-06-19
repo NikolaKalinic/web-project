@@ -48,8 +48,9 @@ public class UserDAO {
 	public User find(String username, String password) {
 		if(checkDoesExists(username)) {
 			User user = getByUsername(username);
-			if(user.getPassword().equals(password))
+			if(user.getPassword().equals(password)) {
 				return user;
+			}
 			else
 				return null;
 		}else {
