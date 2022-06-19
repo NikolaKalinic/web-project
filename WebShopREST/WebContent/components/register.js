@@ -72,6 +72,7 @@ Vue.component("register", {
                           placeholder="Username"
                           required
                         />
+                        <p id="usernameExists" hidden="true" style="color:red">Username already exists</p>
                       </div>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -196,20 +197,6 @@ Vue.component("register", {
         
     },
     methods: {
-    	/*addProduct : function() {
-    		router.push(`/products/-1`);
-    	},
-    	editProduct : function(id) {
-    		router.push(`/products/${id}`);
-    	},
-    	deleteProduct : function(id, index) {
-    		r = confirm("Are you sure?")
-    		if (r){
-	    		axios
-	            .delete('rest/products/' + id)
-	            .then(response => (this.products.splice(index, 1)))
-    		}
-    	} */
     	async register() {
             await axios.post(
                 "rest/users",
@@ -234,7 +221,16 @@ Vue.component("register", {
         },
         
         getFormValues (submitEvent) {
-            this.register();
+			axios
+			.get('rest/users/exists/'+this.username)
+			.then(response => {if(response.status !=200)
+									document.getElementById("usernameExists").hidden=false;
+								else{
+									document.getElementById("usernameExists").hidden=true;
+									this.register();
+								}})
+            .catch(document.getElementById("usernameExists").hidden=false);
+            
         }
     }
 });

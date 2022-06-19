@@ -58,7 +58,7 @@ public class UserDAO {
 		}
 	}
 	
-	private boolean checkDoesExists(String username) {
+	public boolean checkDoesExists(String username) {
 		boolean exists = false;
 		for(User u : users) {
 			if(u.getUsername().equals(username)) {

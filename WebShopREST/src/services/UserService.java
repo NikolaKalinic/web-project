@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.SportObject;
 import beans.User;
@@ -54,7 +55,17 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getByUsername(username);
 	}
-	
+	@GET
+	@Path("/exists/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkDoesExists(@PathParam("username") String username) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		if(dao.checkDoesExists(username)) {
+			return Response.status(400).entity("Username already exists.").build();
+		}else {
+			return Response.status(200).build();
+		}
+	}
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
