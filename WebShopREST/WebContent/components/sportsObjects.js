@@ -10,7 +10,7 @@ Vue.component("sportsObjects", {
 	    	<div class="topnav">
 			  <a class="active" href="sportsObjects.html">Home</a>
 			  <a href="login.html">Login</a>
-			  <a href="register.html">Sign up</a>
+			  <a href="register.html">Register</a>
 			</div>
 	    	<div style="position: absolute;top: 30%;left: 30%;">
 	    		<h3>Review of sport objects</h3>
