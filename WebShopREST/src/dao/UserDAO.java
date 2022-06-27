@@ -1,27 +1,49 @@
 package dao;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import Personal.PersonalConfig;
 import beans.User;
-import fileHandler.GenericFileHandler;
 
 public class UserDAO {
 	private ArrayList<User> users;
-	private GenericFileHandler<User> fileHandler = new GenericFileHandler<User>();
+	private String pathToFile = PersonalConfig.PROJECT_FOLDER_PATH + "\\WebContent\\";
+	private static final java.lang.reflect.Type USERS_TYPE = new TypeToken<ArrayList<User>>() {
+    }.getType();
+    private static Gson g = new Gson();
 	
 	
 	public UserDAO(String contextPath) {
-		 try {
-			 users = fileHandler.load("users.txt");
-		 }catch(Exception e) {
-			 users = new ArrayList<>();
-		 }
+		users = new ArrayList<>();
+		try {
+            File file = new File(pathToFile+"users.json");
+            JsonReader reader = new JsonReader(new FileReader(file));
+            ArrayList<User> tmp = g.fromJson(reader, USERS_TYPE);
+            users = tmp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 	}
 	
-	public void create(User u) {
+	private void toJSON(String filename) throws FileNotFoundException {
+        PrintWriter out = new PrintWriter(filename);
+        out.printf(g.toJson(users));
+        out.close();
+    }
+	
+	public void create(User u) throws FileNotFoundException {
 		users.add(u);
-		fileHandler.save(users, "users.txt");
+		toJSON(pathToFile+"users.json");
 	}
 	
 	public ArrayList<User> getAll(){
@@ -36,11 +58,11 @@ public class UserDAO {
 		return null;
 	}
 	
-	public void deleteByUsername(String username) {
+	public void deleteByUsername(String username) throws FileNotFoundException {
 		for(int i = 0; i<users.size();i++) {
 			if(users.get(i).getUsername().equals(username)) {
 				users.remove(i);
-				fileHandler.save(users, "users.txt");
+				toJSON(pathToFile+"users.json");
 			}
 		}
 	}

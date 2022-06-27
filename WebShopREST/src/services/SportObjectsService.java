@@ -68,7 +68,7 @@ public class SportObjectsService {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteById(@PathParam("id") int id) {
+	public void deleteById(@PathParam("id") int id) throws FileNotFoundException{
 		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
 		dao.deleteById(id);
 	}

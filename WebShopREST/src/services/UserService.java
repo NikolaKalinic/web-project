@@ -1,5 +1,6 @@
 package services;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -70,7 +71,7 @@ public class UserService {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void create(User u) {
+	public void create(User u) throws FileNotFoundException {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.create(u);
 	}
@@ -78,7 +79,7 @@ public class UserService {
 	@DELETE
 	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteByUsername(@PathParam("username") String username) {
+	public void deleteByUsername(@PathParam("username") String username) throws FileNotFoundException {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.deleteByUsername(username);
 	}
