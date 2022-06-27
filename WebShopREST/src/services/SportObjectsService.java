@@ -1,5 +1,6 @@
 package services;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -58,7 +59,7 @@ public class SportObjectsService {
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void create(SportObject s) {
+	public void create(SportObject s) throws FileNotFoundException {
 		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
 		dao.create(s);
 	}

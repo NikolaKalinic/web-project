@@ -57,7 +57,10 @@ Vue.component("sportsObjects", {
     mounted () {
         axios
           .get('rest/objects/')
-          .then(response => (this.sportsObjects = response.data))
+          .then(response => {
+							this.sportsObjects = response.data;
+							console.log(response);
+							})
     },
     computed: {
     filteredResources (){
