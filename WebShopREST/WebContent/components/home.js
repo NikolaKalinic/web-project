@@ -7,10 +7,21 @@ Vue.component("home", {
 	},
 	    template: `
 	    <div> 
-	    	<div class="topnav d-flex">
-			  <a class="active " href="/web-project/#/home">Home</a>
-			  <button type="button" class="btn btn-info text-right" v-on:click="logout()">Logout</button>
+	    <nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Fitness</a>
+		    </div>
+		    <div class="topnav">
+			  <a class="active" href="/web-project/#/home">Home</a>
 			</div>
+		    <div class="nav navbar-nav navbar-right">
+		      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
+		      <a href="/web-project/#/" on:click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+		    </div>
+		  </div>
+		</nav>
+	    	
 	    	<div class="container">
 	    			<div class="row  align-items-center">
 	    				<div class="col-8 d-flex justify-content-center" >
@@ -61,7 +72,10 @@ Vue.component("home", {
 			axios
 			.post('rest/logout')
 			.then(router.push('/'))
-		}
+		},
+		myProfile : function() {
+    		router.push(`/myProfile`);
+    	}
 	},
     computed: {
     filteredResources (){

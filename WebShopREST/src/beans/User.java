@@ -2,7 +2,7 @@ package beans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+import java.util.List;
 
 import enums.Gender;
 import enums.Role;
@@ -17,6 +17,18 @@ public class User implements Serializable {
 	private String dateOfBirth;
 	private Role role;
 	private String email; //NIJE PO SPECIFIKACIJI
+	
+	//customer
+	private MembershipFee membershipFee;
+	private List<SportObject> visitedObject;
+	private int numberOfPoints;
+	private CustomerType type;
+	
+	//coach
+	private TrainingHistory trainingHistory;
+	
+	//manager
+	private int sportObjectId;
 	
 	public User() {
 	}
@@ -41,6 +53,75 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.role = role;
 		this.email = email;
+	}
+
+	
+	public User(String username, String password, String firstName, String lastName, Gender gender, String dateOfBirth,
+			Role role, String email, MembershipFee membershipFee, List<SportObject> visitedObject, int numberOfPoints,
+			CustomerType type, TrainingHistory trainingHistory, int sportObjectId) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.role = role;
+		this.email = email;
+		this.membershipFee = membershipFee;
+		this.visitedObject = visitedObject;
+		this.numberOfPoints = numberOfPoints;
+		this.type = type;
+		this.trainingHistory = trainingHistory;
+		this.sportObjectId = sportObjectId;
+	}
+
+	public MembershipFee getMembershipFee() {
+		return membershipFee;
+	}
+
+	public void setMembershipFee(MembershipFee membershipFee) {
+		this.membershipFee = membershipFee;
+	}
+
+	public List<SportObject> getVisitedObject() {
+		return visitedObject;
+	}
+
+	public void setVisitedObject(List<SportObject> visitedObject) {
+		this.visitedObject = visitedObject;
+	}
+
+	public int getNumberOfPoints() {
+		return numberOfPoints;
+	}
+
+	public void setNumberOfPoints(int numberOfPoints) {
+		this.numberOfPoints = numberOfPoints;
+	}
+
+	public CustomerType getType() {
+		return type;
+	}
+
+	public void setType(CustomerType type) {
+		this.type = type;
+	}
+
+	public TrainingHistory getTrainingHistory() {
+		return trainingHistory;
+	}
+
+	public void setTrainingHistory(TrainingHistory trainingHistory) {
+		this.trainingHistory = trainingHistory;
+	}
+
+	public int getSportObjectId() {
+		return sportObjectId;
+	}
+
+	public void setSportObjectId(int sportObjectId) {
+		this.sportObjectId = sportObjectId;
 	}
 
 	public String getUsername() {

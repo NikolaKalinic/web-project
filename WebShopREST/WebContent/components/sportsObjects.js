@@ -7,11 +7,20 @@ Vue.component("sportsObjects", {
 	},
 	    template: `
 	    <div> 
-	    	<div class="topnav">
+			<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Fitness</a>
+		    </div>
+		    <div class="topnav">
 			  <a class="active" href="/web-project/#/">Home</a>
-			  <a href="/web-project/#/login">Login</a>
-			  <a href="/web-project/#/register">Register</a>
 			</div>
+		    <div class="nav navbar-nav navbar-right">
+		      <a href="/web-project/#/login"><span class="glyphicon glyphicon-user"></span> Login<li></a>
+		      <a href="/web-project/#/register" on:click="logout()"><span class="glyphicon glyphicon-log-in"></span> Register</a>
+		    </div>
+		  </div>
+		</nav>
 	    	
 	    		<div class="container">
 	    			<div class="row  align-items-center">

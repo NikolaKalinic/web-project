@@ -7,14 +7,14 @@ public class Training {
 	private TrainingType type;
 	private SportObject sportObject;
 	private int durationInMinutes;
-	private Coach coach;
+	private User coach;
 	private String describe;
 	//TODO SLIKA
 	
 	public Training() {
 		
 	}
-	public Training(String name, TrainingType type, SportObject sportObject, int durationInMinutes,Coach coach, String describe) {
+	public Training(String name, TrainingType type, SportObject sportObject, int durationInMinutes,User coach, String describe) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -25,10 +25,10 @@ public class Training {
 	}
 	
 	
-	public Coach getCoach() {
+	public User getCoach() {
 		return coach;
 	}
-	public void setCoach(Coach coach) {
+	public void setCoach(User coach) {
 		this.coach = coach;
 	}
 	public String getName() {

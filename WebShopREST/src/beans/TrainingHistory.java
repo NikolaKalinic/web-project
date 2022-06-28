@@ -1,18 +1,16 @@
 package beans;
 
-import java.time.LocalDateTime;
-
 public class TrainingHistory {
-	private LocalDateTime dateTime;
+	private String dateTime;
 	private Training training;
-	private Customer customer;
-	private Coach coach;
+	private User customer;
+	private User coach;
 	
 	public TrainingHistory() {
 		
 	}
 
-	public TrainingHistory(LocalDateTime dateTime, Training training, Customer customer, Coach coach) {
+	public TrainingHistory(String dateTime, Training training, User customer, User coach) {
 		super();
 		this.dateTime = dateTime;
 		this.training = training;
@@ -20,11 +18,11 @@ public class TrainingHistory {
 		this.coach = coach;
 	}
 
-	public LocalDateTime getDateTime() {
+	public String getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
+	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
 
@@ -36,19 +34,19 @@ public class TrainingHistory {
 		this.training = training;
 	}
 
-	public Customer getCustomer() {
+	public User getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
 
-	public Coach getCoach() {
+	public User getCoach() {
 		return coach;
 	}
 
-	public void setCoach(Coach coach) {
+	public void setCoach(User coach) {
 		this.coach = coach;
 	}
 	

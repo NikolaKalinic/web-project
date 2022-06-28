@@ -9,10 +9,10 @@ import enums.StatusMembershipFee;
 public class MembershipFee {
 	private String id;
 	private MembershipFeeType type;
-	private LocalDate paymentDate;
-	private LocalDateTime expirationDate;
+	private String paymentDate;
+	private String expirationDate;
 	private int price;
-	private Customer customer;
+	private User customer;
 	private StatusMembershipFee status;
 	private int numberOfTerm;
 	
@@ -20,8 +20,8 @@ public class MembershipFee {
 		
 	}
 
-	public MembershipFee(String id, MembershipFeeType type, LocalDate paymentDate, LocalDateTime expirationDate,
-			int price, Customer customer, StatusMembershipFee status, int numberOfTerm) {
+	public MembershipFee(String id, MembershipFeeType type, String paymentDate, String expirationDate,
+			int price, User customer, StatusMembershipFee status, int numberOfTerm) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -49,19 +49,19 @@ public class MembershipFee {
 		this.type = type;
 	}
 
-	public LocalDate getPaymentDate() {
+	public String getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(LocalDate paymentDate) {
+	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
-	public LocalDateTime getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(LocalDateTime expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
@@ -73,11 +73,11 @@ public class MembershipFee {
 		this.price = price;
 	}
 
-	public Customer getCustomer() {
+	public User getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
 

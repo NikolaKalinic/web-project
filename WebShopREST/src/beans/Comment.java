@@ -1,14 +1,14 @@
 package beans;
 
 public class Comment {
-	private Customer customer;
+	private User customer;
 	private SportObject sportObject;
 	private String text;
 	private int mark;
 	public Comment() {
 		
 	}
-	public Comment(Customer customer, SportObject sportObject, String text, int mark) {
+	public Comment(User customer, SportObject sportObject, String text, int mark) {
 		super();
 		this.customer = customer;
 		this.sportObject = sportObject;
@@ -16,10 +16,10 @@ public class Comment {
 		this.mark = mark;
 	}
 	
-	public Customer getCustomer() {
+	public User getCustomer() {
 		return customer;
 	}
-	public void setCustomer(Customer customer) {
+	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
 	public SportObject getSportObject() {

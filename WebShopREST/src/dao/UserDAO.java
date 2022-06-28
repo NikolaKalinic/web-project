@@ -23,12 +23,14 @@ public class UserDAO {
 	
 	
 	public UserDAO(String contextPath) {
-		users = new ArrayList<>();
+		users = new ArrayList<User>();
 		try {
             File file = new File(pathToFile+"users.json");
             JsonReader reader = new JsonReader(new FileReader(file));
-            ArrayList<User> tmp = g.fromJson(reader, USERS_TYPE);
-            users = tmp;
+            users = g.fromJson(reader, USERS_TYPE);
+            if(users.isEmpty()) {
+            	System.out.println("Prazan sam");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
