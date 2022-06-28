@@ -48,6 +48,9 @@ public class SportObjectsService {
 		return dao.getAll();
 	}
 	
+	
+	
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

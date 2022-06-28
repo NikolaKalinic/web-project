@@ -72,6 +72,17 @@ public class SportObjectDAO {
 		return null;
 	}
 	
+	public ArrayList<SportObject> getSearch(String name, String type, String location, String averageRating){
+		ArrayList<SportObject> searchedObjects = new ArrayList<SportObject>();
+		for(SportObject so : getAll()) {
+			if(so.getName().toLowerCase().startsWith(name.toLowerCase()) && so.getType().toString().toLowerCase().startsWith(type.toLowerCase()) && 
+			so.getLocation().getAddress().getState().toLowerCase().startsWith(location.toLowerCase()) && String.valueOf(so.getAverageRating()).startsWith(averageRating)) {
+				searchedObjects.add(so);
+			}
+		}
+		return searchedObjects;
+	}
+	
 	public void deleteById(int id) throws FileNotFoundException{
 		for(int i = 0; i<sportObjects.size();i++) {
 			if(sportObjects.get(i).getId() == id) {
