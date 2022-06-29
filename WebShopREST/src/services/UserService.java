@@ -91,7 +91,7 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("username") String username,User newUser) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
-		if(dao.checkDoesExists(newUser.getUsername()) && !username.equals(newUser.getUsername()))
+		if(dao.checkDoesExistsWithoutCurrentUsername(newUser.getUsername(), username))
 			return Response.status(400).entity("Username already exists.").build();
 		else {
 			dao.update(username, newUser);

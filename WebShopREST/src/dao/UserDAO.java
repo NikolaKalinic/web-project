@@ -92,6 +92,19 @@ public class UserDAO {
 		return exists;
 	}
 	
+	public boolean checkDoesExistsWithoutCurrentUsername(String newUsername, String oldUsername) {
+		boolean exists = false;		
+		for(User u : users) {
+	
+			if(u.getUsername().equals(oldUsername)) {				
+				break;
+			} else if(u.getUsername().equals(newUsername)) {
+				exists = true;				
+			}
+		}
+		return exists;
+	}
+	
 	public void update(String username,User newUser) {
 		for(User u : users) {
 			if(u.getUsername().equals(username)) {
@@ -101,6 +114,7 @@ public class UserDAO {
 				u.setFirstName(newUser.getFirstName());
 				u.setLastName(newUser.getLastName());
 				u.setGender(newUser.getGender());
+				u.setPassword(newUser.getPassword());
 				//DODATI JOS STVARI OVDE PO POTREBI I ZASTITI NA FRONTU NEKE PROMENE
 			}
 		}

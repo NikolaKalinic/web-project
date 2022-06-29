@@ -1,6 +1,6 @@
 Vue.component("register", { 
 	data: function () {
-	    return {
+	    return {		
 	    }
 	},
 	    template: ` 

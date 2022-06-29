@@ -1,7 +1,8 @@
 Vue.component("myProfile", { 
 	data: function () {
 	    return {
-	      user: null
+	      user: null,
+	      oldUsername: null
 	    }
 	},
 	    template: ` 
@@ -36,21 +37,20 @@ Vue.component("myProfile", {
                     <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" v-model="user.lastName" placeholder="surname"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="enter username" v-model="user.username"></div>
+                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="enter username" v-model="user.username"><p id="usernameExists" hidden="true"  style="color:red">Username already exists</p></div>
                     <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" placeholder="enter password" v-model="user.password"></div>
                     <div class="col-md-12"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="enter address line 2" v-model="user.gender"></div>
                     <div class="col-md-12"><label class="labels">Date of birth</label><input type="text" class="form-control" placeholder="enter date of birth" v-model="user.dateOfBirth"></div>
-                    <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="enter role" v-model="user.role"></div>
+                    <div class="col-md-12"><label class="labels">Role</label><input type="text" disabled class="form-control" placeholder="enter role" v-model="user.role"></div>
                     <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" v-model="user.email"></div>
-                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Customer type</label><input type="text" class="form-control" placeholder="enter type" v-model="user.type"></div>
-                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Membership fee</label><input type="text" class="form-control" placeholder="enter membership fee" v-model="user.membershipFee"></div>
-                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Visited objects</label><input type="text" class="form-control" placeholder="enter type" v-model="user.visitedObject"></div>
-                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Number of points</label><input type="text" class="form-control" placeholder="enter number of points" v-model="user.numberOfPoints"></div>
-                    <div v-if="user.role === 'Coach' " class="col-md-12"><label class="labels">Training history</label><input type="text" class="form-control" placeholder="enter number of points" v-model="user.trainingHistory"></div>
-                    <div v-if="user.role === 'Manager' " class="col-md-12"><label class="labels">Sport object id</label><input type="text" class="form-control" placeholder="enter number of points" v-model="user.sportObjectId"></div>
+                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Customer type</label><input disabled type="text" class="form-control"  v-model="user.type"></div>
+                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Membership fee</label><input disabled type="text" class="form-control"  v-model="user.membershipFee"></div>                    
+                    <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Number of points</label><input disabled type="text" class="form-control"  v-model="user.numberOfPoints"></div>
+                    <div v-if="user.role === 'Coach' " class="col-md-12"><label class="labels">Training history</label><input disabled type="text" class="form-control"  v-model="user.trainingHistory"></div>
+                    <div v-if="user.role === 'Manager' " class="col-md-12"><label class="labels">Sport object id</label><input disabled type="text" class="form-control"  v-model="user.sportObjectId"></div>
                 </div>
                 
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" v-on:click="updateProfile(this.user)">Save Profile</button></div>
             </div>
         </div>
         
@@ -69,9 +69,30 @@ Vue.component("myProfile", {
     mounted () {
         axios
         .get('rest/currentUser')
-        .then(response => (this.user = response.data))
+        .then(response => {this.user = response.data;
+        					 this.oldUsername = this.user.username;
+        					 })
     },
     methods: {
-    	
+   		updateProfile : function(user){
+			axios
+			.put("rest/users/" + this.oldUsername,
+				{
+                    username: this.user.username,
+                    password: this.user.password,
+                    firstName: this.user.firstName,
+                    lastName: this.user.lastName,
+                    gender: this.user.gender,
+                    dateOfBirth: this.user.dateOfBirth,
+                    role: "Customer",
+                    email: this.user.email
+                })
+			.then(response => {if(response.status !=200)
+									document.getElementById("usernameExists").hidden=false;
+								else{
+									document.getElementById("usernameExists").hidden=true;									
+								}})
+            .catch(document.getElementById("usernameExists").hidden=false);
+		}
     }
 });
