@@ -92,4 +92,24 @@ public class UserDAO {
 		return exists;
 	}
 	
+	public void update(String username,User newUser) {
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				u.setUsername(newUser.getUsername());
+				u.setDateOfBirth(newUser.getDateOfBirth());
+				u.setEmail(newUser.getEmail());
+				u.setFirstName(newUser.getFirstName());
+				u.setLastName(newUser.getLastName());
+				u.setGender(newUser.getGender());
+				//DODATI JOS STVARI OVDE PO POTREBI I ZASTITI NA FRONTU NEKE PROMENE
+			}
+		}
+		try {
+			toJSON(pathToFile+"users.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
 }

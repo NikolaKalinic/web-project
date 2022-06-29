@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -82,5 +83,21 @@ public class UserService {
 	public void deleteByUsername(@PathParam("username") String username) throws FileNotFoundException {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.deleteByUsername(username);
+	}
+	
+	@PUT
+	@Path("/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response update(@PathParam("username") String username,User newUser) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		if(dao.checkDoesExists(newUser.getUsername()) && !username.equals(newUser.getUsername()))
+			return Response.status(400).entity("Username already exists.").build();
+		else {
+			dao.update(username, newUser);
+			System.out.println("USAO SAM OVDE");
+			return Response.status(200).build();
+		}
+			
 	}
 }
