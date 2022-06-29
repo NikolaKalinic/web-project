@@ -56,7 +56,11 @@ Vue.component("login", {
                     username: this.username,
                     password: this.password,
                 })
-				.then(response => {if(response.status != 200) document.getElementById("err").hidden=false; else router.push(`/home`);})
+				.then(response => {	if(response.status != 200)
+										document.getElementById("err").hidden=false;
+									else
+										router.push(`/home`);
+									})
 				.catch(document.getElementById("err").hidden=false);
 			}
 		},
@@ -64,19 +68,5 @@ Vue.component("login", {
 		getFormValues (submitEvent) {
             this.login();
         }
-    	/*addProduct : function() {
-    		router.push(`/products/-1`);
-    	},
-    	editProduct : function(id) {
-    		router.push(`/products/${id}`);
-    	},
-    	deleteProduct : function(id, index) {
-    		r = confirm("Are you sure?")
-    		if (r){
-	    		axios
-	            .delete('rest/products/' + id)
-	            .then(response => (this.products.splice(index, 1)))
-    		}
-    	} */
     }
 });
