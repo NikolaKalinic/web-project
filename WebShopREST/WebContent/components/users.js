@@ -1,7 +1,10 @@
 Vue.component("users",{
 	data:function(){
 		return{
-			users: null
+			users: null,
+			searchSurname: '',
+	     	searchName: '',
+	     	searchUsername: ''
 		}
 	},
 	template: `
@@ -30,8 +33,21 @@ Vue.component("users",{
 		    			
 		    		</div>
 		    		<div class="row">
+		    			<div class="col-3">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
+		    			</div>
+		    			<div class="col-3">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchSurname" placeholder="Surname..." />
+		    			</div>
+		    			<div class="col-3">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchUsername" placeholder="Username..." />
+		    			</div>
+		    			
+		    			
+		    		</div>
+		    		<div class="row">
 		    			<div class="col">
-			    		<table class="table table-striped table-dark">
+			    		<table class="table table-striped table-dark" :data="users">
 			    			<thead>
 				    		<tr>
 				    			<th>First name</th>
@@ -43,7 +59,7 @@ Vue.component("users",{
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="u in users">
+				    		<tr v-for="u in filteredResources">
 				    			<td>{{u.firstName}}</td>
 				    			<td>{{u.lastName}}</td>
 				    			<td>{{u.username}}</td>
@@ -62,5 +78,34 @@ Vue.component("users",{
 		axios
 		.get('rest/users')
 		.then(response => (this.users = response.data))
-	}
+	},	
+	computed: {
+    filteredResources (){
+      if(this.searchName){		
+      return this.users.filter((item)=>{		
+		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
+		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
+			return item;
+		}
+      })
+      } if(this.searchSurname){		
+      return this.users.filter((item)=>{		
+		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
+		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
+			return item;
+		}
+      })
+      } if(this.searchUsername){		
+      return this.users.filter((item)=>{		
+		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
+		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
+			return item;
+		}
+      })
+      }
+       else{
+        return this.users;
+      }
+    }
+  }
 });
