@@ -52,7 +52,7 @@ Vue.component("object-info",{
             <h5 class="my-3">{{object.name}}</h5>
             <p class="text-muted mb-1">{{object.location.address.place}} {{object.location.address.zipCode}}</p>
             <p class="text-muted mb-4">{{object.location.longitude}}, {{object.location.latitude}}</p>
-            <div class="d-flex justify-content-center mb-2" v-if="user.role === 'Admin'>
+            <div class="d-flex justify-content-center mb-2" v-if="user.role === 'Admin' ">
               <button type="button" class="btn btn-primary" v-on:click="deleteObject(object.id)">Delete</button>
               
             </div>
