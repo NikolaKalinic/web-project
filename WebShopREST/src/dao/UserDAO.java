@@ -28,9 +28,6 @@ public class UserDAO {
             File file = new File(pathToFile+"users.json");
             JsonReader reader = new JsonReader(new FileReader(file));
             users = g.fromJson(reader, USERS_TYPE);
-            if(users.isEmpty()) {
-            	System.out.println("Prazan sam");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

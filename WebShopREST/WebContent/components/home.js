@@ -15,7 +15,8 @@ Vue.component("home", {
 			      <a class="navbar-brand" href="#">Fitness</a>
 			    </div>
 			    <div class="topnav">
-				  <a class="active" href="/web-project/#/home">Home</a>
+				  <a class="active" href="/web-project/#/home">Sport Object</a>
+				  <a href="/web-project/#/training">Training</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
@@ -31,6 +32,7 @@ Vue.component("home", {
 			    <div class="topnav">
 				  <a class="active" href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/users">Users</a>
+				  <a href="/web-project/#/training">Training</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
