@@ -60,6 +60,7 @@ Vue.component("home", {
 				    			<th>Location</th>
 				    			<th>Average rating</th>	
 				    			<th>Work time</th>	
+				    			<th>More</td>
 				    		</tr>
 				    		</thead>
 				    		<tbody>
@@ -70,7 +71,8 @@ Vue.component("home", {
 				    			<td>{{so.status}}</td>
 				    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
 				    			<td>{{so.averageRating}}</td>
-				    			<td>{{so.workTime}}</td>		
+				    			<td>{{so.workTime}}</td>
+				    			<td> <button type="button" v-on:click="showInfo(so.id)" class="btn btn-light">Show</button> </td>		
 				    		</tr>
 				    		</tbody>
 				    	</table>    
@@ -82,7 +84,7 @@ Vue.component("home", {
     mounted () {
 		axios
 		.get('rest/currentUser')
-		.then(response => {this.user= response.data;alert(user.role);})
+		.then(response => {this.user= response.data;})
         axios
           .get('rest/objects/')
           .then(response => (this.sportsObjects = response.data))
@@ -95,7 +97,10 @@ Vue.component("home", {
 		},
 		myProfile : function() {
     		router.push(`/myProfile`);
-    	}
+    	},
+    	showInfo: function(id){
+			router.push(`/object/${id}`);
+		}
 	},
     computed: {
     filteredResources (){

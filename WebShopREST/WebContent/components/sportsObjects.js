@@ -72,7 +72,7 @@ Vue.component("sportsObjects", {
 				    			<td>{{so.status}}</td>
 				    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
 				    			<td>{{so.averageRating}}</td>
-				    			<td>{{so.workTime}}</td>		
+				    			<td>{{so.workTime}}</td>	
 				    		</tr>
 				    		</tbody>
 				    	</table>    
@@ -87,10 +87,13 @@ Vue.component("sportsObjects", {
           .get('rest/objects/')
           .then(response => {
 							this.sportsObjects = response.data;
-							console.log(response);
 							})
     },
-    
+    methods:{
+		showInfo: function(id){
+			router.push(`/object/${id}`);
+		}
+	},
     computed: {
     filteredResources (){
       if(this.searchName){		
