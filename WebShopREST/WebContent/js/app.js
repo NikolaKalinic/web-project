@@ -8,6 +8,7 @@ const MyProfile = {template: '<myProfile></myProfile>'}
 const Users = {template: '<users></users>'}
 const ObjectInfo = { template: '<object-info></object-info>'}
 const Training = { template: '<training></training>'}
+const PromoCode = { template: '<promo-code></promo-code>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -20,7 +21,8 @@ const router = new VueRouter({
 	    { path: '/myProfile', component: MyProfile},
 	    { path: '/users', component: Users},
 	    { path: '/object/:id', component: ObjectInfo},
-	    { path: '/training', component: Training}
+	    { path: '/training', component: Training},
+	    { path: '/promo-code', component: PromoCode}
 	  ]
 });
 

@@ -33,6 +33,7 @@ Vue.component("home", {
 				  <a class="active" href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/users">Users</a>
 				  <a href="/web-project/#/training">Training</a>
+				  <a href="/web-project/#/promo-code">Promo Code</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
