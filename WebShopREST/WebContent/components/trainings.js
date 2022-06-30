@@ -1,7 +1,9 @@
 Vue.component("training", {
 	data:function(){
 		return{
-			user:null
+			user:null,
+			items:null,
+			sportObject : null
 		}
 	},
 	template:`
@@ -38,11 +40,49 @@ Vue.component("training", {
 			    </div>
 			  </div>
 			</nav>
+		
+		
+			<div class="container">
+				<div class="row  align-items-center">
+					<div class="col-8 d-flex justify-content-center" >
+						<h2>Review of sport objects</h2>
+					</div>
+					<div class="col-4">
+						<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<table class="table table-striped table-dark">
+							<thead>
+								<tr>
+									<th>Training Name</th>
+									<th>Sport object</th>
+									<th>Training date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="so in user.historyCustomer">
+									<td>{{so.training.name}}</td>
+									<td>{{}}</td>
+									<td>{{so.dateTime}}</td>		
+								</tr>
+							</tbody>
+						</table>    
+					</div>
+				</div>
+			</div>
 		</div>
 	`,
 	mounted(){
 		axios
 		.get('rest/currentUser')
 		.then(response=>{this.user = response.data;});
+	},
+	methods:{
+		 
+			
+			
+		
 	}
 });

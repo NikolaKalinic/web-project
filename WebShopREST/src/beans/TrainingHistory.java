@@ -1,21 +1,32 @@
 package beans;
 
 public class TrainingHistory {
+	private int id;
 	private String dateTime;
 	private Training training;
-	private User customer;
-	private User coach;
+	private String customer;
+	private String coach;
 	
 	public TrainingHistory() {
 		
 	}
 
-	public TrainingHistory(String dateTime, Training training, User customer, User coach) {
+	public TrainingHistory(int id,String dateTime, Training training, String customer, String coach) {
 		super();
+		this.id = id;
 		this.dateTime = dateTime;
 		this.training = training;
 		this.customer = customer;
 		this.coach = coach;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDateTime() {
@@ -34,19 +45,19 @@ public class TrainingHistory {
 		this.training = training;
 	}
 
-	public User getCustomer() {
+	public String getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(User customer) {
+	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
 
-	public User getCoach() {
+	public String getCoach() {
 		return coach;
 	}
 
-	public void setCoach(User coach) {
+	public void setCoach(String coach) {
 		this.coach = coach;
 	}
 	

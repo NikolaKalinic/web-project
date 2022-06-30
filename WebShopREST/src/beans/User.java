@@ -23,6 +23,7 @@ public class User implements Serializable {
 	private List<SportObject> visitedObject;
 	private int numberOfPoints;
 	private CustomerType type;
+	private List<TrainingHistory> historyCustomer;
 	
 	//coach
 	private TrainingHistory trainingHistory;
@@ -74,6 +75,15 @@ public class User implements Serializable {
 		this.type = type;
 		this.trainingHistory = trainingHistory;
 		this.sportObjectId = sportObjectId;
+	}
+
+	
+	public List<TrainingHistory> getHistoryCustomer() {
+		return historyCustomer;
+	}
+
+	public void setHistoryCustomer(List<TrainingHistory> historyCustomer) {
+		this.historyCustomer = historyCustomer;
 	}
 
 	public MembershipFee getMembershipFee() {
