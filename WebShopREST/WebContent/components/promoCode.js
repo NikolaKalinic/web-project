@@ -36,7 +36,7 @@ Vue.component("promo-code",{
 					<div class="justify-content-center">
 				  		<div class="row">
 				   			<div class="col-md-6 col-sm-6 col-xs-12 ">
-								<div class="d-flex justify-content-center">
+								<div class="d-flex justify-content-center mb-2">
 								  <button v-bind:hidden="this.mode=='NEW'" class="btn btn-primary" v-on:click="newPromoCodeButtonClick()">New promo code</button>
 								</div>
 				    		<!-- Form code begins -->
@@ -73,7 +73,11 @@ Vue.component("promo-code",{
 								</div>
 								
 								<div class="form-group"> <!-- Submit button -->
-									<button v-bind:hidden="this.mode=='BROWSE'" class="btn btn-primary " v-on:click="newPromoCode()" name="submit" type="submit">Submit</button>
+									
+									<div class="d-flex justify-content-center mb-2">
+						              <button v-bind:hidden="this.mode=='BROWSE'" v-on:click="newPromoCode()" class="btn btn-primary" type="submit">Submit</button>
+						              <button v-bind:hidden="this.mode=='BROWSE'" v-on:click="cancelButtonClick()" type="button" class="btn btn-outline-primary ms-1">Cancel</button>
+						            </div>
 								</div>
 								</form>
 								<!-- Form code ends --> 
@@ -133,12 +137,20 @@ Vue.component("promo-code",{
             )
             .then( response =>{
                // window.location.href = 'sportsObjects.html';
-               alert("New promo code added!");
+               //alert("New promo code added!");
             });
-            this.mode = "BROWSE";
+            this.mode = 'BROWSE';
         },
         newPromoCodeButtonClick: function(){
 			this.mode = 'NEW';
+		},
+		cancelButtonClick: function(){
+			this.mode = 'BROWSE';
+			this.name = null;
+			this.dateStart = null;
+			this.dateEnd = null;
+			this.numberOfUse = null;
+			this.percentage = null;
 		}
 		 
 		

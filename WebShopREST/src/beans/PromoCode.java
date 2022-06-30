@@ -67,7 +67,7 @@ public class PromoCode {
 		return sdf.format(dateStart);
 	}
 	
-public String displayDateEnd() {		
+	public String displayDateEnd() {		
 		SimpleDateFormat sdf = new SimpleDateFormat("DD.MM.YYYY.");
 		return sdf.format(dateEnd);
 	}
