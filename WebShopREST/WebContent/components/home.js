@@ -17,11 +17,13 @@ Vue.component("home", {
 			    <div class="topnav">
 				  <a class="active" href="/web-project/#/home">Sport Object</a>
 				  <a href="/web-project/#/training">Training</a>
+				  <a href="/web-project/#/membership-fee">Membership fee</a>
 				</div>
+				
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
 			      <a href="/web-project/#/" on:click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
-			    </div>
+			    </div>			    
 			  </div>
 			</nav>
 			<nav class="navbar navbar-inverse" v-if="user.role == 'Admin'">
