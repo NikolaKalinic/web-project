@@ -17,6 +17,7 @@ public class MembershipFee {
 	private StatusMembershipFee status;
 	private int numberOfTerm;
 	
+
 	public MembershipFee() {
 		super();
 		

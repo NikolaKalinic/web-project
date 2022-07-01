@@ -4,7 +4,10 @@ Vue.component("membership-fee", {
 			user: null,
 			membershipFies: null,
 			selectedMemebershipFee: null,
-			mode: 'BROWSE'
+			mode: 'BROWSE',
+			promoCode: null,
+			validPromoCode: null,
+			used: false
 			
 	    }
 	}, 
@@ -56,15 +59,15 @@ Vue.component("membership-fee", {
                             <p class="py-2">Promo code</p>
                             <div>
                             	</br>	                            
-	                            <input class=" d-inline-block" style="width: 100px" type="text"/>
-	                            <input class="btn btn-secondary btn-sm" value="Check" type="button"/> 
+	                            <input class=" d-inline-block" v-model="promoCode" style="width: 100px" type="text"/>
+	                            <input class="btn btn-secondary btn-sm" v-on:click="checkPromoCode()" value="Check" type="button"/> 
 	                            </br>
-	                            <p style="color: red">Invalid promo code</p>
+	                            <p id="invalidPromo" style="color: red" hidden="true">Invalid promo code</p>
                             </div>
                             
                         </div>
                         <div class="d-flex align-items-center justify-content-center">                                                      	                            
-	                            <input class="btn btn-primary" style="margin: 20px 40px 0px 0px" value="Confirm"  type="button"/>
+	                            <input v-on:click="confirmBuy()" class="btn btn-primary" style="margin: 20px 40px 0px 0px" value="Confirm"  type="button"/>
 								<input class="btn btn-secondary" style="margin: 20px 0px 0px 0px" value="Cancel" type="button"/>          
                             	
                         </div>
@@ -75,8 +78,7 @@ Vue.component("membership-fee", {
 			    		<table class="table table-striped table-dark ">
 			    			<thead>
 				    		<tr>
-				    			<th>Type</th>
-				    			<th>Payment date</th>				    			
+				    			<th>Type</th>				    							    			
 				    			<th>Price</th>		
 				    			<th>Status</th>		
 				    			<th>Per day</th>  
@@ -85,11 +87,10 @@ Vue.component("membership-fee", {
 				    		</thead>
 				    		<tbody>
 				    		<tr v-for="mf in membershipFies">
-				    			<td>{{mf.type}}</td>
-				    			<td v-if="mf.type == 'Daily'">Daily</td>
-				    			<td v-else>{{mf.paymentDate | dateFormat('DD.MM.')}}				    			
-				    			<td>{{mf.price}}</td>	
-				    			<td><span class="badge badge-success rounded-pill  ">{{mf.status}}</span></td>		
+				    			<td>{{mf.type}}</td>				    							    			
+				    			<td>{{mf.price}}</td>				    			
+				    			<td v-if="mf.id == user.membershipFee.id && user.membershipFee.expirationDate >= new Date()"><span class="badge badge-success rounded-pill">{{user.membershipFee.status}}</span></td>					    							    							    			
+				    			<td v-else><span class="badge badge-success rounded-pill">{{mf.status}}</span></td>
 				    			<td>{{mf.numberOfTerm}}</td>
 				    			<td><button type="button" v-on:click="showInfo(mf.id)" class="btn btn-secondary btn-sm btn-rounded">
 				          Select
@@ -113,12 +114,80 @@ Vue.component("membership-fee", {
         
     },
     methods: {
+	generateExpirationDate: function(){			
+			if(this.selectedMemebershipFee.type == 'Daily'){
+				this.selectedMemebershipFee.expirationDate = new Date();
+			} else if (this.selectedMemebershipFee.type == 'Monthly') {
+				moment(this.selectedMemebershipFee.expirationDate).add(1, 'M');
+			}
+			
+		},
     	showInfo: function(id){
 			axios
 			.get('rest/membership-fee/' + id)
-			.then(response =>(this.selectedMemebershipFee = response.data));
-			this.mode = 'SELECT';
-		}   
+			.then(response =>{this.selectedMemebershipFee = response.data;
+			 this.selectedMemebershipFee.expirationDate = new Date();
+			 if (this.selectedMemebershipFee.type == 'Monthly') {				
+				this.selectedMemebershipFee.expirationDate.setDate(this.selectedMemebershipFee.expirationDate.getDate() + 31);				
+			 } else if (this.selectedMemebershipFee.type == 'Annual'){				
+				this.selectedMemebershipFee.expirationDate.setDate(this.selectedMemebershipFee.expirationDate.getDate() + 365);
+			} else if (this.selectedMemebershipFee.type == 'Daily') {
+				this.selectedMemebershipFee.expirationDate.setDate(this.selectedMemebershipFee.expirationDate.getDate() + 1);
+			}
+			 });
+			this.mode = 'SELECT';	
+			this.used = false;			
+		},
+		checkPromoCode: function(){
+			if(this.promoCode == null){
+				return;
+			}
+			axios
+			.get('rest/promo-code/name='+ this.promoCode)
+			.then(response => {if(response.status == 200){
+									currentDate = new Date();
+									document.getElementById("invalidPromo").hidden = true;	
+									this.validPromoCode = response.data;	
+									
+									if(currentDate > this.validPromoCode.dateStart && currentDate < this.validPromoCode.dateEnd && this.validPromoCode.numberOfUse > 0){										
+										if(this.used == false){
+											this.selectedMemebershipFee.price = this.selectedMemebershipFee.price - (this.selectedMemebershipFee.price*this.validPromoCode.percentage)/100;
+											this.used = true;	
+										}									
+																			
+									} else {
+										document.getElementById("invalidPromo").hidden = false
+									}	
+								}														  
+							  })
+			.catch(document.getElementById("invalidPromo").hidden = false)
+				
+		},
+		confirmBuy: function(){
+			axios
+			.put('rest/users/fee-' + this.user.username, {
+				"id": this.selectedMemebershipFee.id,
+				"type": this.selectedMemebershipFee.type,
+				"paymentDate": new Date(),
+				"expirationDate": this.selectedMemebershipFee.expirationDate,
+				"price": this.selectedMemebershipFee.price,
+				"username": this.user.username,
+				"status": "Active",
+				"numberOfTerm": this.selectedMemebershipFee.numberOfTerm
+			})
+			.then( response =>{               
+               this.mode = 'BROWSE';
+               this.user.membershipFee.status = "Active";  
+               alert('REFRESH PAGE!');             
+            });
+            if(this.used == true){
+				axios
+				.put('rest/promo-code/' + this.validPromoCode.id)
+			}
+            
+			
+		} 
+		
     	},
     filters: {
     	dateFormat: function (value, format) {
