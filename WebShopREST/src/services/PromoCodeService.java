@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,9 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.PromoCode;
-import beans.SportObject;
 import dao.PromoCodeDAO;
-import dao.SportObjectDAO;
 
 @Path("/promo-code")
 public class PromoCodeService {
@@ -54,6 +53,14 @@ public class PromoCodeService {
 		PromoCodeDAO dao = (PromoCodeDAO) ctx.getAttribute("promoCodeDAO");
 		return dao.getById(id);
 	}
+	@GET
+	@Path("/name={name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public PromoCode getByName(@PathParam("name") String name) {
+		PromoCodeDAO dao = (PromoCodeDAO) ctx.getAttribute("promoCodeDAO");
+		System.out.println(name);
+		return dao.getByName(name);
+	}
 	
 	@POST
 	@Path("/")
@@ -61,6 +68,14 @@ public class PromoCodeService {
 	public void create(PromoCode s) throws FileNotFoundException {
 		PromoCodeDAO dao = (PromoCodeDAO) ctx.getAttribute("promoCodeDAO");
 		dao.create(s);
+	}
+	
+	@PUT
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void updateNumberOfTerms(@PathParam("id") int id) {
+		PromoCodeDAO dao = (PromoCodeDAO) ctx.getAttribute("promoCodeDAO");
+		dao.updateNumberOfTerms(id);
 	}
 	
 	@DELETE

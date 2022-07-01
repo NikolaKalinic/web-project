@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
+import beans.MembershipFee;
 import beans.User;
 
 public class UserDAO {
@@ -111,8 +112,22 @@ public class UserDAO {
 				u.setFirstName(newUser.getFirstName());
 				u.setLastName(newUser.getLastName());
 				u.setGender(newUser.getGender());
-				u.setPassword(newUser.getPassword());
+				u.setPassword(newUser.getPassword());				
 				//DODATI JOS STVARI OVDE PO POTREBI I ZASTITI NA FRONTU NEKE PROMENE
+			}
+		}
+		try {
+			toJSON(pathToFile+"users.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
+	public void updateMembershipFee(String username, MembershipFee membershipFee) {
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				u.setMembershipFee(membershipFee);
 			}
 		}
 		try {

@@ -69,6 +69,27 @@ public class PromoCodeDAO {
 		return null;
 	}
 	
+	public PromoCode getByName(String wantedName) {
+		for(PromoCode s : promoCodes) {			
+			if(s.getName().equals(wantedName))				
+				return s;
+		}
+		return null;
+	}
+	
+	public void updateNumberOfTerms(int id) {
+		for(PromoCode s : promoCodes) {
+			if(s.getId() == id) {
+				if(s.getNumberOfUse() == 0) {
+					return;
+				} else {
+					s.setNumberOfUse(s.getNumberOfUse() - 1);
+				}
+				
+			}
+		}
+	}
+	
 	public void deleteById(int id) throws FileNotFoundException{
 		for(int i = 0; i<promoCodes.size();i++) {
 			if(promoCodes.get(i).getId() == id) {

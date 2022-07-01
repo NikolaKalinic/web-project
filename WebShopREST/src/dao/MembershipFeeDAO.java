@@ -67,7 +67,7 @@ public class MembershipFeeDAO {
             sb.append(AlphaNumericString
                           .charAt(index));
         }
-  
+        
         return sb.toString();
     }
 	
