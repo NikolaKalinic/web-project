@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private String email; //NIJE PO SPECIFIKACIJI
 	
 	//customer
-	private MembershipFee membershipFee;
+	private String membershipFeeId;
 	private List<SportObject> visitedObject;
 	private int numberOfPoints;
 	private CustomerType type;
@@ -57,7 +57,7 @@ public class User implements Serializable {
 
 	
 	public User(String username, String password, String firstName, String lastName, Gender gender, String dateOfBirth,
-			Role role, String email, MembershipFee membershipFee, List<SportObject> visitedObject, int numberOfPoints,
+			Role role, String email, String membershipFeeId, List<SportObject> visitedObject, int numberOfPoints,
 			CustomerType type, TrainingHistory trainingHistory, int sportObjectId) {
 		super();
 		this.username = username;
@@ -68,7 +68,7 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.role = role;
 		this.email = email;
-		this.membershipFee = membershipFee;
+		this.membershipFeeId = membershipFeeId;
 		this.visitedObject = visitedObject;
 		this.numberOfPoints = numberOfPoints;
 		this.type = type;
@@ -76,12 +76,12 @@ public class User implements Serializable {
 		this.sportObjectId = sportObjectId;
 	}
 
-	public MembershipFee getMembershipFee() {
-		return membershipFee;
+	public String getMembershipFeeId() {
+		return membershipFeeId;
 	}
 
-	public void setMembershipFee(MembershipFee membershipFee) {
-		this.membershipFee = membershipFee;
+	public void setMembershipFee(String membershipFee) {
+		this.membershipFeeId = membershipFee;
 	}
 
 	public List<SportObject> getVisitedObject() {
