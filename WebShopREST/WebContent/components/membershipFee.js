@@ -89,7 +89,7 @@ Vue.component("membership-fee", {
 				    		<tr v-for="mf in membershipFies">
 				    			<td>{{mf.type}}</td>				    							    			
 				    			<td>{{mf.price}}</td>				    			
-				    			<td v-if="mf.id == user.membershipFee.id && user.membershipFee.expirationDate >= new Date()"><span class="badge badge-success rounded-pill">{{user.membershipFee.status}}</span></td>					    							    							    			
+				    			<td v-if="user.membershipFee != null && mf.id == user.membershipFee.id && user.membershipFee.expirationDate >= new Date()"><span class="badge badge-success rounded-pill">{{user.membershipFee.status}}</span></td>					    							    							    			
 				    			<td v-else><span class="badge badge-success rounded-pill">{{mf.status}}</span></td>
 				    			<td>{{mf.numberOfTerm}}</td>
 				    			<td><button type="button" v-on:click="showInfo(mf.id)" class="btn btn-secondary btn-sm btn-rounded">
