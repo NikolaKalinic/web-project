@@ -68,7 +68,7 @@ Vue.component("membership-fee", {
                         </div>
                         <div class="d-flex align-items-center justify-content-center">                                                      	                            
 	                            <input v-on:click="confirmBuy()" class="btn btn-primary" style="margin: 20px 40px 0px 0px" value="Confirm"  type="button"/>
-								<input class="btn btn-secondary" style="margin: 20px 0px 0px 0px" value="Cancel" type="button"/>          
+								<input v-on:click="cancel()" class="btn btn-secondary" style="margin: 20px 0px 0px 0px" value="Cancel" type="button"/>          
                             	
                         </div>
                     </div>
@@ -89,7 +89,7 @@ Vue.component("membership-fee", {
 				    		<tr v-for="mf in membershipFies">
 				    			<td>{{mf.type}}</td>				    							    			
 				    			<td>{{mf.price}}</td>				    			
-				    			<td v-if="user.membershipFee != null && mf.id == user.membershipFee.id && user.membershipFee.expirationDate >= new Date()"><span class="badge badge-success rounded-pill">{{user.membershipFee.status}}</span></td>					    							    							    			
+				    			<td v-if="user.membershipFee != null && mf.id == user.membershipFee.id && user.membershipFee.expirationDate >= new Date()"><span class="badge badge-success rounded-pill bg-success">{{user.membershipFee.status}}</span></td>					    							    							    			
 				    			<td v-else><span class="badge badge-success rounded-pill">{{mf.status}}</span></td>
 				    			<td>{{mf.numberOfTerm}}</td>
 				    			<td><button type="button" v-on:click="showInfo(mf.id)" class="btn btn-secondary btn-sm btn-rounded">
@@ -178,7 +178,7 @@ Vue.component("membership-fee", {
 			.then( response =>{               
                this.mode = 'BROWSE';
                this.user.membershipFee.status = "Active";  
-               alert('REFRESH PAGE!');             
+               router.push(`/home`);             
             });
             if(this.used == true){
 				axios
@@ -186,6 +186,10 @@ Vue.component("membership-fee", {
 			}
             
 			
+		},
+		cancel: function(){
+			this.mode = 'BROWSE';
+			this.promoCode = null;
 		} 
 		
     	},
