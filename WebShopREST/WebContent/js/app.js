@@ -10,6 +10,7 @@ const ObjectInfo = { template: '<object-info></object-info>'}
 const Training = { template: '<training></training>'}
 const PromoCode = { template: '<promo-code></promo-code>'}
 const MembershipFee = { template: '<membership-fee></membership-fee>'}
+const MyObject = { template: '<my-object></my-object>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -24,7 +25,8 @@ const router = new VueRouter({
 	    { path: '/object/:id', component: ObjectInfo},
 	    { path: '/training', component: Training},
 	    { path: '/promo-code', component: PromoCode},
-	    { path: '/membership-fee', component: MembershipFee}
+	    { path: '/membership-fee', component: MembershipFee},
+	    { path: '/my-object', component: MyObject}
 	  ]
 });
 

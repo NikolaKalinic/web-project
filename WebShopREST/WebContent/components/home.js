@@ -51,7 +51,7 @@ Vue.component("home", {
 			    <div class="topnav">
 				  <a class="active" href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/training">Training</a>
-				  <a href="/web-project/#/myObject">My object</a>
+				  <a href="/web-project/#/my-object">My object</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
