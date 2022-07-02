@@ -43,8 +43,21 @@ public class UserDAO {
     }
 	
 	public void create(User u) throws FileNotFoundException {
+		u.setId(getNewId());
 		users.add(u);
 		toJSON(pathToFile+"users.json");
+	}
+	
+	private int getNewId() {
+		if(users.isEmpty())
+			return 100;
+		int maxId = users.get(0).getId();
+		for(User so : users) {
+			if(maxId < so.getId()) {
+				maxId = so.getId();
+			}
+		}
+		return maxId+1;
 	}
 	
 	public ArrayList<User> getAll(){

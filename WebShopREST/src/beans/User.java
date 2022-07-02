@@ -9,6 +9,7 @@ import enums.Role;
 
 public class User implements Serializable {
 	
+	private int id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -34,7 +35,7 @@ public class User implements Serializable {
 	}
 
 	public User(String firstName, String lastName, String email, String username, String password) {
-		super();
+		super();		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -44,7 +45,7 @@ public class User implements Serializable {
 
 	public User(String username, String password,String dateOfBirth, String firstName, String lastName, Gender gender,
 			 Role role,String email) {
-		super();
+		super();		
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -59,7 +60,7 @@ public class User implements Serializable {
 	public User(String username, String password, String firstName, String lastName, Gender gender, String dateOfBirth,
 			Role role, String email, MembershipFee membershipFee, List<Integer> visitedObject, int numberOfPoints,
 			CustomerType type, TrainingHistory trainingHistory, int sportObjectId) {
-		super();
+		super();		
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -76,6 +77,13 @@ public class User implements Serializable {
 		this.sportObjectId = sportObjectId;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public MembershipFee getMembershipFee() {
 		return membershipFee;

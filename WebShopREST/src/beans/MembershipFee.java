@@ -100,6 +100,12 @@ public class MembershipFee {
 	public void setNumberOfTerm(int numberOfTerm) {
 		this.numberOfTerm = numberOfTerm;
 	}
+
+	@Override
+	public String toString() {
+		return  this.type +  ", number of term= " + this.numberOfTerm;
+				 
+	}
 	
 	
 	
