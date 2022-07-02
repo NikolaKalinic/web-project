@@ -78,6 +78,20 @@ public class UserDAO {
 		return retVal;
 	}
 	
+	public ArrayList<User> 	getCoachByObject( SportObject object){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u : users) {
+			if(object.getCoachWhoWorks() != null) {
+				for(int i : object.getCoachWhoWorks()) {
+					if(i == u.getId()) {
+						retVal.add(u);
+					}
+				}
+			}
+		}
+		return retVal;
+	}
+	
 	public User getByUsername(String username) {
 		for(User u : users) {
 			if(u.getUsername().equals(username))

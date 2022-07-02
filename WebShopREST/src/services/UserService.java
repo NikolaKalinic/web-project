@@ -67,6 +67,15 @@ public class UserService {
 		return dao.getUsersByObject(id);
 	}
 	@GET
+	@Path("/objId={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getCoachByObject(@PathParam("id") int id) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		SportObjectDAO daoObj = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		
+		return dao.getCoachByObject(daoObj.getById(id));
+	}
+	@GET
 	@Path("/exists/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkDoesExists(@PathParam("username") String username) {

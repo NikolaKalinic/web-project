@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import enums.SportObjectType;
 import enums.StatusSportObject;
@@ -15,6 +16,8 @@ public class SportObject implements Serializable{
 	//TODO LOGO
 	private double averageRating;
 	private String workTime;
+	private ArrayList<Integer> coachWhoWorks = new ArrayList<>();
+	
 	
 	public SportObject() {
 		
@@ -35,6 +38,13 @@ public class SportObject implements Serializable{
 		this.workTime = workTime;		
 	}
 	
+	
+	public ArrayList<Integer> getCoachWhoWorks() {
+		return coachWhoWorks;
+	}
+	public void setCoachWhoWorks(ArrayList<Integer> coachWhoWorks) {
+		this.coachWhoWorks = coachWhoWorks;
+	}
 	public int getId() {
 		return id;
 	}
