@@ -75,6 +75,7 @@ public class User implements Serializable {
 		this.trainingHistory = trainingHistory;
 		this.sportObjectId = sportObjectId;
 	}
+	
 
 	public MembershipFee getMembershipFee() {
 		return membershipFee;

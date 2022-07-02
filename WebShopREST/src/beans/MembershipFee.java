@@ -2,6 +2,7 @@ package beans;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import enums.MembershipFeeType;
 import enums.StatusMembershipFee;
@@ -9,28 +10,38 @@ import enums.StatusMembershipFee;
 public class MembershipFee {
 	private String id;
 	private MembershipFeeType type;
-	private String paymentDate;
-	private String expirationDate;
-	private int price;
-	private User customer;
+	private Date paymentDate;
+	private Date expirationDate;
+	private int price;	
+	private String username;
 	private StatusMembershipFee status;
 	private int numberOfTerm;
 	
+
 	public MembershipFee() {
+		super();
 		
 	}
 
-	public MembershipFee(String id, MembershipFeeType type, String paymentDate, String expirationDate,
-			int price, User customer, StatusMembershipFee status, int numberOfTerm) {
+	public MembershipFee(String id, MembershipFeeType type, Date paymentDate, Date expirationDate, int price, String username,
+			 StatusMembershipFee status, int numberOfTerm) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.paymentDate = paymentDate;
 		this.expirationDate = expirationDate;
-		this.price = price;
-		this.customer = customer;
+		this.username = username;
+		this.price = price;		
 		this.status = status;
 		this.numberOfTerm = numberOfTerm;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getId() {
@@ -49,19 +60,19 @@ public class MembershipFee {
 		this.type = type;
 	}
 
-	public String getPaymentDate() {
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(String paymentDate) {
+	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
-	public String getExpirationDate() {
+	public Date getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(String expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
@@ -72,14 +83,7 @@ public class MembershipFee {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-	public User getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(User customer) {
-		this.customer = customer;
-	}
+	
 
 	public StatusMembershipFee getStatus() {
 		return status;
@@ -96,5 +100,7 @@ public class MembershipFee {
 	public void setNumberOfTerm(int numberOfTerm) {
 		this.numberOfTerm = numberOfTerm;
 	}
+	
+	
 	
 }
