@@ -1,6 +1,7 @@
 package services;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,13 @@ public class UserService {
 	public User getByUsername(@PathParam("username") String username) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getByUsername(username);
+	}
+	@GET
+	@Path("/object={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getUsersByObject(@PathParam("id") int id) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getUsersByObject(id);
 	}
 	@GET
 	@Path("/exists/{username}")

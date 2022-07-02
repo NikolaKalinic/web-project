@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
 import beans.MembershipFee;
+import beans.SportObject;
 import beans.User;
 
 public class UserDAO {
@@ -48,6 +49,20 @@ public class UserDAO {
 	
 	public ArrayList<User> getAll(){
 		return users;
+	}
+	
+	public ArrayList<User> getUsersByObject(int objectId){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u : users) {
+			if(u.getVisitedObject() != null) {
+				for(int id : u.getVisitedObject()) {
+					if(id == objectId) {
+						retVal.add(u);
+					}
+				}
+			}
+		}
+		return retVal;
 	}
 	
 	public User getByUsername(String username) {

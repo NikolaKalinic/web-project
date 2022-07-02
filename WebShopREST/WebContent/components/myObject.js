@@ -2,7 +2,8 @@ Vue.component("my-object",{
 	data:function(){
 		return{
 			user:null,
-			object:null
+			object:null,
+			usersWhoVisitedObject:null
 		}
 	},
 	template:`
@@ -40,33 +41,30 @@ Vue.component("my-object",{
 				            </div>
 				          </div>
 				        </div>
+				            <div class="overflow-auto">
 				        <div class="card mb-4 mb-lg-0">
 				          <div class="card-body p-0">
-				            <ul class="list-group list-group-flush rounded-3">
-				              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-				                <i class="fas fa-globe fa-lg text-warning"></i>
-				                <p class="mb-0">https://mdbootstrap.com</p>
-				              </li>
-				              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-				                <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-				                <p class="mb-0">mdbootstrap</p>
-				              </li>
-				              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-				                <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-				                <p class="mb-0">@mdbootstrap</p>
-				              </li>
-				              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-				                <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-				                <p class="mb-0">mdbootstrap</p>
-				              </li>
-				              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-				                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-				                <p class="mb-0">mdbootstrap</p>
-				              </li>
-				            </ul>
+				          <h4 style="font-family:'serif'">Users who visited this object:</h4>
+				          <div>
+				          	<table class="table thead-dark">
+			    				<thead>
+				    				<tr>
+				    					<th>First name</th>
+				    					<th>Last Name</th>
+				    				</tr>
+			    				</thead>
+				    			<tbody>
+				    			<tr v-for="so in usersWhoVisitedObject">
+				    				<td>{{so.firstName}}</td>
+				    				<td>{{so.lastName}}</td>	
+				    			</tr>
+				    			</tbody>
+				    		</table>    
 				          </div>
+			              </div>
 				        </div>
 				      </div>
+				          </div>
 				      <div class="col-lg-8">
 				        <div class="card mb-4">
 				          <div class="card-body">
@@ -198,8 +196,11 @@ Vue.component("my-object",{
 							this.user= response.data;
 							axios
 							.get('rest/objects/'+this.user.sportObjectId)
-							.then(response => {this.object = response.data;})
-							;});
+							.then(response => {this.object = response.data;});
+							axios
+							.get('rest/users/object='+this.user.sportObjectId)
+							.then(response => (this.usersWhoVisitedObject=response.data));
+							});
 		
 	}
 });
