@@ -17,6 +17,7 @@ Vue.component("users",{
 			    <div class="topnav">
 				  <a  href="/web-project/#/home">Sports Objects</a>
 				  <a class="active" href="/web-project/#/users">Users</a>
+				  <a  href="/web-project/#/promo-code">Promo Code</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
@@ -33,7 +34,10 @@ Vue.component("users",{
 		    			
 		    		</div>
 		    		<div class="row">
-		    			<div class="col-3">
+		    			<div>
+		    				<button class="btn btn-primary form-control my-2 py-1" v-on:click="addNewUser()">Add new user</button>
+		    			</div>	
+		    			<div class="col-4">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
 		    			</div>
 		    			<div class="col-3">
@@ -42,8 +46,6 @@ Vue.component("users",{
 		    			<div class="col-3">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchUsername" placeholder="Username..." />
 		    			</div>
-		    			
-		    			
 		    		</div>
 		    		<div class="row">
 		    			<div class="col">
@@ -107,5 +109,10 @@ Vue.component("users",{
         return this.users;
       }
     }
-  }
+  },
+   methods: {
+    	addNewUser : function() {
+    		router.push(`/add-new-user`);
+    	}
+    }
 });

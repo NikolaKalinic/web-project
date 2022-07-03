@@ -22,7 +22,6 @@ Vue.component("promo-code",{
 			    <div class="topnav">
 				  <a  href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/users">Users</a>
-				  <a href="/web-project/#/training">Training</a>
 				  <a class="active" href="/web-project/#/promo-code">Promo Code</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
