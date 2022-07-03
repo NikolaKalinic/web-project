@@ -14,6 +14,7 @@ import com.google.gson.stream.JsonReader;
 import Personal.PersonalConfig;
 import beans.MembershipFee;
 import beans.SportObject;
+import beans.TrainingHistory;
 import beans.User;
 
 public class UserDAO {
@@ -166,10 +167,26 @@ public class UserDAO {
 		}
 	}
 	
+	
+	
 	public void updateMembershipFee(String username, MembershipFee membershipFee) {
 		for(User u : users) {
 			if(u.getUsername().equals(username)) {
 				u.setMembershipFee(membershipFee);
+			}
+		}
+		try {
+			toJSON(pathToFile+"users.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
+	public void updateTrainingHistory(String username, TrainingHistory trh) {
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				u.addTrainingHistory(trh);
 			}
 		}
 		try {

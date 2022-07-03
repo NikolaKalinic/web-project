@@ -1,54 +1,54 @@
 package beans;
 
+import java.util.Date;
+
 public class TrainingHistory {
-	private String dateTime;
-	private Training training;
-	private User customer;
-	private User coach;
+	private int id;
+	private Date dateTime;
+	private int trainingId;
+	private int customerId;	
 	
 	public TrainingHistory() {
 		
 	}
 
-	public TrainingHistory(String dateTime, Training training, User customer, User coach) {
-		super();
-		this.dateTime = dateTime;
-		this.training = training;
-		this.customer = customer;
-		this.coach = coach;
+	public TrainingHistory(int training, int customer) {
+		super();		
+		this.trainingId = training;
+		this.customerId = customer;		
 	}
 
-	public String getDateTime() {
+	public Date getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(String dateTime) {
+	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
 
-	public Training getTraining() {
-		return training;
+	public int getTrainingId() {
+		return trainingId;
 	}
 
-	public void setTraining(Training training) {
-		this.training = training;
+	public void setTrainingId(int training) {
+		this.trainingId = training;
 	}
 
-	public User getCustomer() {
-		return customer;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(User customer) {
-		this.customer = customer;
+	public void setCustomerId(int customer) {
+		this.customerId = customer;
+	}
+	public int getId() {
+		return id;
 	}
 
-	public User getCoach() {
-		return coach;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public void setCoach(User coach) {
-		this.coach = coach;
-	}
+	
 	
 	
 }

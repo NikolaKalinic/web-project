@@ -1,7 +1,7 @@
 package beans;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import enums.Gender;
@@ -26,7 +26,14 @@ public class User implements Serializable {
 	private CustomerType type;
 	
 	//coach
-	private TrainingHistory trainingHistory;
+	private List<TrainingHistory> trainingHistory;
+	
+	public void addTrainingHistory(TrainingHistory trh) {
+		if(trainingHistory == null) {
+			trainingHistory = new ArrayList<TrainingHistory>();
+		}
+		trainingHistory.add(trh);
+	}
 	
 	//manager
 	private int sportObjectId;
@@ -59,7 +66,7 @@ public class User implements Serializable {
 	
 	public User(String username, String password, String firstName, String lastName, Gender gender, String dateOfBirth,
 			Role role, String email, MembershipFee membershipFee, List<Integer> visitedObject, int numberOfPoints,
-			CustomerType type, TrainingHistory trainingHistory, int sportObjectId) {
+			CustomerType type, List<TrainingHistory> trainingHistory, int sportObjectId) {
 		super();		
 		this.username = username;
 		this.password = password;
@@ -117,12 +124,12 @@ public class User implements Serializable {
 		this.type = type;
 	}
 
-	public TrainingHistory getTrainingHistory() {
+	public List<TrainingHistory> getTrainingHistory() {
 		return trainingHistory;
 	}
 
-	public void setTrainingHistory(TrainingHistory trainingHistory) {
-		this.trainingHistory = trainingHistory;
+	public void setTrainingHistoryId(List<TrainingHistory> trainingHistoryId) {
+		this.trainingHistory = trainingHistoryId;
 	}
 
 	public int getSportObjectId() {

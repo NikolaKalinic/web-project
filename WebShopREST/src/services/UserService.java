@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.MembershipFee;
-import beans.SportObject;
+import beans.TrainingHistory;
 import beans.User;
 import dao.SportObjectDAO;
 import dao.UserDAO;
@@ -127,6 +127,17 @@ public class UserService {
 		System.out.println(membershipFee.getType().toString());
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
 		dao.updateMembershipFee(username, membershipFee);		
+		
+	}
+	
+	@PUT
+	@Path("/trainingHistory-{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("username") String username, TrainingHistory trh) {
+		
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
+		dao.updateTrainingHistory(username, trh);		
 		
 	}
 	
