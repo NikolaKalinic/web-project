@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.Date;
+
 import enums.TrainingType;
 
 public class Training {
@@ -8,14 +10,16 @@ public class Training {
 	private TrainingType type;
 	private int sportObject;
 	private int durationInMinutes;
-	private User coach;
+	private int coach;
+	private Date dateTime;	
 	private String describe;
+	private boolean canceled;
 	//TODO SLIKA
 	
 	public Training() {
 		
 	}
-	public Training(int id,String name, TrainingType type, int sportObjectId, int durationInMinutes,User coach, String describe) {
+	public Training(int id,String name, TrainingType type, int sportObjectId, int durationInMinutes,int coach, Date dateTime, String describe, boolean canceled) {
 		super();
 		this.id=id;
 		this.name = name;
@@ -23,20 +27,35 @@ public class Training {
 		this.sportObject = sportObjectId;
 		this.durationInMinutes = durationInMinutes;
 		this.describe = describe;
+		this.dateTime = dateTime;
 		this.coach = coach;
+		this.canceled = canceled;
 	}
 	
+
+	public boolean getCanceled() {
+		return canceled;
+	}
+	public void setCanceled(boolean canceled) {
+		this.canceled = canceled;
+	}
 	
+	public Date getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getCoach() {
+	public int getCoach() {
 		return coach;
 	}
-	public void setCoach(User coach) {
+	public void setCoach(int coach) {
 		this.coach = coach;
 	}
 	public String getName() {

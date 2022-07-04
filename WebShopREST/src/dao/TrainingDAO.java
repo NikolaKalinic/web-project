@@ -42,6 +42,7 @@ public class TrainingDAO {
     
     public void create(Training s) throws FileNotFoundException {
 		s.setId(getNewId());
+		s.setCanceled(false);
 		trainings.add(s);
 		toJSON(pathToFile+"trainings.json");
 	}
@@ -62,6 +63,20 @@ public class TrainingDAO {
 		return trainings;
 	}
 	
+	public ArrayList<Training> getTrainingsByCoach(int id){
+		ArrayList<Training> result = new ArrayList<Training>();
+		for(Training tr : trainings) {
+			if(tr.getCoach() == id) {
+				result.add(tr);
+			}
+		}
+		if(result.isEmpty()) {
+			return null;
+		} else {
+			return result;
+		}
+	}
+	
 	public Training getById(int wantedId) {
 		for(Training s : trainings) {
 			if(s.getId() == wantedId)
@@ -76,6 +91,20 @@ public class TrainingDAO {
 				trainings.remove(i);
 				toJSON(pathToFile+"trainings.json");
 			}
+		}
+	}
+	
+	public void cancelTraining(int id) {
+		for(Training s: trainings) {
+			if(s.getId() == id) {
+				s.setCanceled(true);
+			}
+		}
+		try {
+			toJSON(pathToFile+"trainings.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
 		}
 	}
     

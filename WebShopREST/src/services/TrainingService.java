@@ -5,19 +5,23 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.MembershipFee;
 import beans.SportObject;
 import beans.Training;
 import dao.SportObjectDAO;
 import dao.TrainingDAO;
+import dao.UserDAO;
 
 @Path("/trainings")
 public class TrainingService {
@@ -53,6 +57,24 @@ public class TrainingService {
 	public Training getById(@PathParam("id") int id) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
 		return dao.getById(id);
+	}
+	
+	@GET
+	@Path("/getByCoach-{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getTrainingsByCoach(@PathParam("id") int id){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.getTrainingsByCoach(id);
+	}
+	
+	@PUT
+	@Path("/cancel-{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void cancelTraining(@PathParam("id") int id) {		
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");		
+		dao.cancelTraining(id);	
+		
 	}
 	
 	@POST
