@@ -16,6 +16,7 @@ import beans.MembershipFee;
 import beans.SportObject;
 import beans.TrainingHistory;
 import beans.User;
+import enums.Role;
 
 public class UserDAO {
 	private ArrayList<User> users;
@@ -88,6 +89,16 @@ public class UserDAO {
 						retVal.add(u);
 					}
 				}
+			}
+		}
+		return retVal;
+	}
+	
+	public ArrayList<User> getFreeManagers(){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u: users) {
+			if(u.getRole()==Role.Manager && u.getSportObjectId()==0) {
+				retVal.add(u);
 			}
 		}
 		return retVal;

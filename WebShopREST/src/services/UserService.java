@@ -76,6 +76,13 @@ public class UserService {
 		return dao.getCoachByObject(daoObj.getById(id));
 	}
 	@GET
+	@Path("/freeManager")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getFreeManagers(){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getFreeManagers();
+	}
+	@GET
 	@Path("/exists/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkDoesExists(@PathParam("username") String username) {

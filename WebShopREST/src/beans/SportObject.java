@@ -14,6 +14,7 @@ public class SportObject implements Serializable{
 	private StatusSportObject status;
 	private Location location;	
 	//TODO LOGO
+	private String path;
 	private double averageRating;
 	private String workTime;
 	private ArrayList<Integer> coachWhoWorks = new ArrayList<>();
@@ -39,6 +40,12 @@ public class SportObject implements Serializable{
 	}
 	
 	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public ArrayList<Integer> getCoachWhoWorks() {
 		return coachWhoWorks;
 	}

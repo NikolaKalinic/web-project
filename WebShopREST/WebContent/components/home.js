@@ -80,14 +80,17 @@ Vue.component("home", {
 		    				<h2>Review of sport objects</h2>
 		    			</div>
 		    			<div class="col-4">
-		    				<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
+		    				
 		    			</div>
+		    			<button type="button" class="btn btn-primary" v-on:click="addNewObject()" v-if="user.role=='Admin'">Add new object</button>
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
 		    		</div>
 		    		<div class="row">
 		    			<div class="col">
 			    		<table class="table table-striped table-dark">
 			    			<thead>
 				    		<tr>
+				    			<th>Image</th>
 				    			<th>Name</th>
 				    			<th>Type</th>
 				    			<th>Content</th>
@@ -100,6 +103,7 @@ Vue.component("home", {
 				    		</thead>
 				    		<tbody>
 				    		<tr v-for="so in filteredResources">
+				    			<td><img v-bind:src="so.path" :alt="selectedDog" width="100" height="100" /></td>
 				    			<td>{{so.name}}</td>
 				    			<td>{{so.content}}</td>
 				    			<td>{{so.type}}</td>
@@ -135,6 +139,9 @@ Vue.component("home", {
     	},
     	showInfo: function(id){
 			router.push(`/object/${id}`);
+		},
+		addNewObject: function(){
+			router.push(`/add-new-object`);
 		}
 	},
     computed: {
