@@ -86,6 +86,15 @@ public class UserService {
 			return Response.status(200).build();
 		}
 	}
+	
+	@GET
+	@Path("/userByTrainingId-{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCustomerNameByTrainingId(@PathParam("id") int id) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getCustomerNameByTrainingId(id);
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -138,6 +147,17 @@ public class UserService {
 		
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
 		dao.updateTrainingHistory(username, trh);		
+		
+	}
+	
+	@PUT
+	@Path("/trainings-{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("username") String username, int trainingId) {
+		
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
+		dao.updateTrainings(username, trainingId);		
 		
 	}
 	

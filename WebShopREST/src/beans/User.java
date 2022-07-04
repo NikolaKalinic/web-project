@@ -24,9 +24,24 @@ public class User implements Serializable {
 	private List<Integer> visitedObject;
 	private int numberOfPoints;
 	private CustomerType type;
+	private List<Integer> trainingId;
 	
+
 	//coach
 	private List<TrainingHistory> trainingHistory;
+	//manager
+	private int sportObjectId;
+
+	public List<Integer> getTrainingId() {
+		return trainingId;
+	}
+
+	public void addTraining(int trainingId) {
+		if(this.trainingId == null) {
+			this.trainingId = new ArrayList<Integer>();
+		}
+		this.trainingId.add(trainingId);
+	}
 	
 	public void addTrainingHistory(TrainingHistory trh) {
 		if(trainingHistory == null) {
@@ -35,8 +50,7 @@ public class User implements Serializable {
 		trainingHistory.add(trh);
 	}
 	
-	//manager
-	private int sportObjectId;
+	
 	
 	public User() {
 	}
@@ -66,7 +80,7 @@ public class User implements Serializable {
 	
 	public User(String username, String password, String firstName, String lastName, Gender gender, String dateOfBirth,
 			Role role, String email, MembershipFee membershipFee, List<Integer> visitedObject, int numberOfPoints,
-			CustomerType type, List<TrainingHistory> trainingHistory, int sportObjectId) {
+			CustomerType type, List<TrainingHistory> trainingHistory, List<Integer> trainingId, int sportObjectId) {
 		super();		
 		this.username = username;
 		this.password = password;
@@ -81,6 +95,7 @@ public class User implements Serializable {
 		this.numberOfPoints = numberOfPoints;
 		this.type = type;
 		this.trainingHistory = trainingHistory;
+		this.trainingId = trainingId;
 		this.sportObjectId = sportObjectId;
 	}
 	

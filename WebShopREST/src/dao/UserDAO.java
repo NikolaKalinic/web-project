@@ -197,4 +197,29 @@ public class UserDAO {
 		}
 	}
 	
+	public void updateTrainings(String username, int trainingId) {
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				u.addTraining(trainingId);
+			}
+		}
+		try {
+			toJSON(pathToFile+"users.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
+	public String getCustomerNameByTrainingId(int trainingId) {
+		for(User u : users) {
+			for(int t : u.getTrainingId()) {
+				if(t == trainingId) {
+					return u.getFirstName() + " " + u.getLastName();
+				}
+			}
+		}		
+		return null;
+	}
+	
 }
