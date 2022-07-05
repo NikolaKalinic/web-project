@@ -1,6 +1,7 @@
 package services;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -85,7 +86,10 @@ public class CommentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Comment>reject(@PathParam("id") int id) throws FileNotFoundException{
 		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
-		return dao.reject(id);
+		SportObjectDAO daoObj = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		ArrayList<Comment> tmp =dao.reject(id);
+		daoObj.calculateMark(getByObjectId(getById(id).getSportObjectId()));
+		return tmp;
 	}
 	
 	@PUT
@@ -93,6 +97,9 @@ public class CommentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Comment> accept(@PathParam("id") int id) throws FileNotFoundException{
 		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
-		return dao.accept(id);
+		SportObjectDAO daoObj = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		ArrayList<Comment> tmp = dao.accept(id);
+		daoObj.calculateMark(getByObjectId(getById(id).getSportObjectId()));
+		return tmp;
 	}
 }

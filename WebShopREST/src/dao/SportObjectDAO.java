@@ -5,13 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
+import beans.Comment;
 import beans.SportObject;
+import enums.CommentStatus;
 
 
 public class SportObjectDAO {
@@ -88,6 +91,36 @@ public class SportObjectDAO {
 			if(sportObjects.get(i).getId() == id) {
 				sportObjects.remove(i);
 				toJSON(pathToFile+"sportsObjects.json");
+			}
+		}
+	}
+	
+	public void calculateMark(Collection<Comment> comments) throws FileNotFoundException {
+		int objId = ((ArrayList<Comment>)comments).get(0).getSportObjectId();
+		if(comments.isEmpty()) {
+			updateNewAvgMark(objId,0);
+			return;
+		}
+		double sum=0;
+		int cnt=0;
+		for(Comment c : comments) {
+			if(c.getStatus() == CommentStatus.Accepted) {
+				System.out.println("-----");
+				System.out.println("ID="+c.getId());
+				System.out.println("MARK="+c.getMark());
+				cnt++;
+				sum+=c.getMark();
+			}
+		}
+		updateNewAvgMark(objId,sum/cnt);
+	}
+	
+	private void updateNewAvgMark(int objId,double mark) throws FileNotFoundException {
+		for(SportObject s : sportObjects) {
+			if(s.getId()==objId) {
+				s.setAverageRating(mark);
+				toJSON(pathToFile+"sportsObjects.json");
+				return;
 			}
 		}
 	}
