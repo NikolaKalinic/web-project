@@ -59,6 +59,15 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getByUsername(username);
 	}
+	
+	@GET
+	@Path("/id={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getById(@PathParam("id") int id) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getById(id);
+	}
+	
 	@GET
 	@Path("/object={id}")
 	@Produces(MediaType.APPLICATION_JSON)

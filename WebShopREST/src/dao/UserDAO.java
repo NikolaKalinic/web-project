@@ -66,6 +66,15 @@ public class UserDAO {
 		return users;
 	}
 	
+	public User getById(int id) {
+		for(User u :users) {
+			if(u.getId()==id) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<User> getUsersByObject(int objectId){
 		ArrayList<User> retVal = new ArrayList<User>();
 		for(User u : users) {

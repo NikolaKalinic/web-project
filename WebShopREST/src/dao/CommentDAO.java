@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 import Personal.PersonalConfig;
 import beans.Comment;
 import beans.SportObject;
+import enums.CommentStatus;
 
 public class CommentDAO {
 	private ArrayList<Comment> comments;
@@ -84,5 +85,39 @@ public class CommentDAO {
 				toJSON(pathToFile+"comments.json");
 			}
 		}
+	}
+	
+	public ArrayList<Comment> getByObjectId(int objectId){
+		ArrayList<Comment> retVal = new ArrayList<Comment>();
+		for(Comment c : comments) {
+			if(c.getSportObjectId() == objectId) {
+				retVal.add(c);
+			}
+		}
+		return retVal;
+	}
+	
+	public ArrayList<Comment> reject(int id ) throws FileNotFoundException {
+		int objId=-1;
+		for(Comment c : comments)  {
+			if(c.getId()==id) {
+				objId=c.getSportObjectId();
+				c.setStatus(CommentStatus.Rejected);
+				toJSON(pathToFile+"comments.json");
+			}
+		}
+		return getByObjectId(objId);
+	}
+	
+	public ArrayList<Comment> accept(int id ) throws FileNotFoundException {
+		int objId=-1;
+		for(Comment c : comments)  {
+			if(c.getId()==id) {
+				objId=c.getSportObjectId();
+				c.setStatus(CommentStatus.Accepted);
+				toJSON(pathToFile+"comments.json");
+			}
+		}
+		return getByObjectId(objId);
 	}
 }

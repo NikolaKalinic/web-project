@@ -4,7 +4,7 @@ import enums.CommentStatus;
 
 public class Comment {
 	private int id;
-	private int customerId;
+	private String customerId;
 	private int sportObjectId;
 	private String text;
 	private int mark;
@@ -13,7 +13,7 @@ public class Comment {
 	public Comment() {
 		
 	}
-	public Comment(int customer, int sportObject, String text, int mark) {
+	public Comment(String customer, int sportObject, String text, int mark) {
 		super();
 		this.customerId = customer;
 		this.sportObjectId = sportObject;
@@ -40,10 +40,10 @@ public class Comment {
 	public void setDeleted(boolean isDeleted) {
 		this.deleted = isDeleted;
 	}
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(int customer) {
+	public void setCustomerId(String customer) {
 		this.customerId = customer;
 	}
 	public int getSportObjectId() {
