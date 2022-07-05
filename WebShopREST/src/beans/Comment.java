@@ -1,32 +1,56 @@
 package beans;
 
+import enums.CommentStatus;
+
 public class Comment {
-	private User customer;
-	private SportObject sportObject;
+	private int id;
+	private int customerId;
+	private int sportObjectId;
 	private String text;
 	private int mark;
+	private boolean deleted;
+	private CommentStatus status;
 	public Comment() {
 		
 	}
-	public Comment(User customer, SportObject sportObject, String text, int mark) {
+	public Comment(int customer, int sportObject, String text, int mark) {
 		super();
-		this.customer = customer;
-		this.sportObject = sportObject;
+		this.customerId = customer;
+		this.sportObjectId = sportObject;
 		this.text = text;
 		this.mark = mark;
 	}
 	
-	public User getCustomer() {
-		return customer;
+	
+	public int getId() {
+		return id;
 	}
-	public void setCustomer(User customer) {
-		this.customer = customer;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public SportObject getSportObject() {
-		return sportObject;
+	public CommentStatus getStatus() {
+		return status;
 	}
-	public void setSportObject(SportObject sportObject) {
-		this.sportObject = sportObject;
+	public void setStatus(CommentStatus status) {
+		this.status = status;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.deleted = isDeleted;
+	}
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customer) {
+		this.customerId = customer;
+	}
+	public int getSportObjectId() {
+		return sportObjectId;
+	}
+	public void setSportObjectId(int sportObject) {
+		this.sportObjectId = sportObject;
 	}
 	public String getText() {
 		return text;
