@@ -45,10 +45,11 @@ public class SportObjectDAO {
         out.close();
     }
 
-	public void create(SportObject s) throws FileNotFoundException {
+	public int create(SportObject s) throws FileNotFoundException {
 		s.setId(getNewId());
 		sportObjects.add(s);
 		toJSON(pathToFile+"sportsObjects.json");
+		return s.getId();
 	}
 	
 	private int getNewId() {

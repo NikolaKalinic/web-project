@@ -2,7 +2,8 @@ Vue.component("add-new-object",{
 	data:function(){
 		return{
 			user:null,
-			freeManagers:null
+			freeManagers:null,
+			objectId:null
 		}
 	},
 	template:`
@@ -78,85 +79,85 @@ Vue.component("add-new-object",{
                       </div>
                       <div class="col-md-6 mb-4 pb-2">
                         <div class="form-outline">
-                          <label class="form-label" for="userType">Free managers</label>
+	                        <div class="d-flex justify-content-between">
+	                          <label class="form-label" for="userType">Free managers</label>
+	                          <label><a href="/web-project/#/add-new-manager">Create new manager</a></label>
+	                        </div>
 					        <select v-model="testVal" class="browser-default custom-select form-control form-control-lg">
-						    <option v-for="item in freeManagers" :value="item.username">{{item.firstName}} {{item.lastName}}</option>
+						    <option v-for="item in freeManagers" :value="item.id">{{item.firstName}} {{item.lastName}}</option>
 							</select>
                         </div> 
                       </div>
                     </div>
 
-                    <!--<div class="row">
+                    <div class="row">
                       <div class="col-md-6 mb-4 d-flex align-items-center">
-                        <div class="form-outline datepicker w-100">
-                          <label for="birthdayDate" class="form-label">Birthday</label>
+                        <div class="form-outline datepicker w-10">
+                          <label for="" class="form-label">Number</label>
                           <input
                             type="text"
-                            name="dateOfBirth"
-                            v-model="dateOfBirth"
+                            name="number"
+                            v-model="number"
                             class="form-control form-control-lg"
                             id="dateOfBirth"
-                            placeholder="Date of Birthday"
+                            placeholder="Number"
                             required
                           />
+                            
                         </div>
-                      </div>
-                      <div class="col-md-6 mb-4">
-                        <h6 class="mb-2 pb-1">Gender:</h6>
-                        <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          v-model="picked"
-                          id="femaleGender"
-                          value="Female"
-                          checked
-                        />
-                        <label class="form-check-label" for="femaleGender">Female</label>
-                      </div>
-
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          v-model="picked"
-                          id="maleGender"
-                          value="Male"
-                        />
-                        <label class="form-check-label" for="maleGender">Male</label>
-                      </div>
-
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          v-model="picked"
-                          id="otherGender"
-                          value="Other"
-                        />
-                        <label class="form-check-label" for="otherGender">Other</label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-4 pb-2">
-                        <div class="form-outline">
-                          <label class="form-label" for="emailAddress">Email</label>
+                        <div class="form-outline datepicker w-100">
+                          <label for="" class="form-label">Street</label>
                           <input
-                            type="email"
-                            name="email"
-                            v-model="email"
-                            id="emailAddress"
+                            type="text"
+                            name="street"
+                            v-model="street"
                             class="form-control form-control-lg"
-                            placeholder="Email"
+                            id="street"
+                            placeholder="Street"
                             required
-                          />
+                          />                           
                         </div>
-                      </div> -->
-                      
+                        <div class="form-outline datepicker w-100">
+                          <label for="" class="form-label">City</label>
+                          <input
+                            type="text"
+                            name="city"
+                            v-model="city"
+                            class="form-control form-control-lg"
+                            id="city"
+                            placeholder="City"
+                            required
+                          />                            
+                        </div>
+                        <div class="form-outline datepicker w-100">
+                          <label for="" class="form-label">Country</label>
+                          <input
+                            type="text"
+                            name="country"
+                            v-model="country"
+                            class="form-control form-control-lg"
+                            id="country"
+                            placeholder="Country"
+                            required
+                          />                            
+                        </div>
+                        <div class="form-outline datepicker w-100">
+                          <label for="" class="form-label">Zip</label>
+                          <input
+                            type="text"
+                            name="zip"
+                            v-model="zip"
+                            class="form-control form-control-lg"
+                            id="zip"
+                            placeholder="code"
+                            required
+                          />                            
+                        </div>
+                       
+                      </div>
+                    
                     </div>
+                    
                   </div>
                   
                   
@@ -185,6 +186,7 @@ Vue.component("add-new-object",{
 		axios
 		.get('rest/users/freeManager')
 		.then(response => {this.freeManagers= response.data;})
+		
 	},
 	methods:{
 		submit: function(){
@@ -198,16 +200,21 @@ Vue.component("add-new-object",{
 		            "longitude": 124,
 		            "latitude": 214,
 		            "address": {
-				                "street": "Bulevar",
-				                "number": "123",
-				                "place": "Novi Sad",
-				                "zipCode": "122121",
-				                "state": "Serbia"
+				                "street": this.street,
+				                "number": this.number,
+				                "place": this.city,
+				                "zipCode": this.zip,
+				                "state": this.country
 								}
         		},
         		path:"images/"+document.getElementById('path').files[0].name
 			})
-			.then(response =>(alert("Dodao sam")))
-		}
+			.then(response => {
+								this.objectId = response.data;
+								axios
+								.put('rest/users/'+this.objectId+'/'+this.testVal)
+								.then(router.push('/home'))
+								});
+		},
 	}
 });

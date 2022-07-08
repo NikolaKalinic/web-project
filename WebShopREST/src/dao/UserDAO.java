@@ -242,4 +242,13 @@ public class UserDAO {
 		return null;
 	}
 	
+	public void updateObjectForManager(int objId,int userId) throws FileNotFoundException {
+		for(User u: users) {
+			if(u.getId()==userId) {
+				u.setSportObjectId(objId);
+				toJSON(pathToFile+"users.json");
+			}
+		}
+	}
+	
 }

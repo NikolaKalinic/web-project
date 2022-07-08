@@ -177,4 +177,13 @@ public class UserService {
 		
 	}
 	
+	@PUT
+	@Path("/{objId}/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateObjectForManager(@PathParam("objId") int objId, @PathParam("userId") int userId) throws FileNotFoundException {	
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
+		dao.updateObjectForManager(objId, userId);		
+		
+	}
 }

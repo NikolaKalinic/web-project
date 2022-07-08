@@ -62,9 +62,9 @@ public class SportObjectsService {
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void create(SportObject s) throws FileNotFoundException {
+	public int create(SportObject s) throws FileNotFoundException {
 		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
-		dao.create(s);
+		return dao.create(s);
 	}
 	
 	
