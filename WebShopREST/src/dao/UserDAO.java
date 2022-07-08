@@ -166,6 +166,14 @@ public class UserDAO {
 		return exists;
 	}
 	
+	public void updateSportObjectId(int id) throws FileNotFoundException {
+		for(User u: users) {
+			if(u.getSportObjectId()==id) {
+				u.setSportObjectId(0);
+			}
+		}
+		toJSON(pathToFile+"users.json");
+	}
 	public void update(String username,User newUser) {
 		for(User u : users) {
 			if(u.getUsername().equals(username)) {

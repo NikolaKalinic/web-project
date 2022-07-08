@@ -294,6 +294,10 @@ Vue.component("object-info",{
 	    		axios
 	            .delete('rest/objects/' + id)
 	            .then(router.push('/home'))
+	            
+	            axios
+	            .put('rest/users/sportObjId='+id)
+	            .then(console.log('uspeo'))
     		}
     	},
     	getUserById: function(id){

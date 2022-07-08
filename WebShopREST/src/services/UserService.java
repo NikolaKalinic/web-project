@@ -140,8 +140,15 @@ public class UserService {
 			dao.update(username, newUser);
 			System.out.println("USAO SAM OVDE");
 			return Response.status(200).build();
-		}
-			
+		}	
+	}
+	@PUT
+	@Path("/sportObjId={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateSportObjectId(@PathParam("id") int id) throws FileNotFoundException {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.updateSportObjectId(id);
 	}
 	
 	@PUT
