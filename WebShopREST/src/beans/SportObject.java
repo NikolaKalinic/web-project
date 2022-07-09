@@ -18,10 +18,11 @@ public class SportObject implements Serializable{
 	private double averageRating;
 	private String workTime;
 	private ArrayList<Integer> coachWhoWorks = new ArrayList<>();
+	private boolean isDeleted;
 	
 	
 	public SportObject() {
-		
+		this.isDeleted = false;
 	}
 	public SportObject(String name, String content) {
 		this.name = name;
@@ -40,6 +41,12 @@ public class SportObject implements Serializable{
 	}
 	
 	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	public String getPath() {
 		return path;
 	}

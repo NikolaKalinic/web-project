@@ -15,6 +15,7 @@ import Personal.PersonalConfig;
 import beans.Comment;
 import beans.SportObject;
 import enums.CommentStatus;
+import enums.StatusSportObject;
 
 
 public class SportObjectDAO {
@@ -32,7 +33,17 @@ public class SportObjectDAO {
 	            System.out.println("-----------------------------------------------------");
 	            JsonReader reader = new JsonReader(new FileReader(file));
 	            ArrayList<SportObject> tmp = g.fromJson(reader, SPORTOBJECTS_TYPE);
-	            sportObjects = tmp;
+	            
+	            for(SportObject s : tmp) {
+	            	if(s.isDeleted()==false && s.getStatus().equals(StatusSportObject.Open)) {
+	            		sportObjects.add(s);
+	            	}
+	            }
+	            for(SportObject s : tmp) {
+	            	if(s.isDeleted()==false && s.getStatus().equals(StatusSportObject.Close)) {
+	            		sportObjects.add(s);
+	            	}
+	            }
 	          
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -90,8 +101,9 @@ public class SportObjectDAO {
 	public void deleteById(int id) throws FileNotFoundException{
 		for(int i = 0; i<sportObjects.size();i++) {
 			if(sportObjects.get(i).getId() == id) {
-				sportObjects.remove(i);
+				sportObjects.get(i).setDeleted(true);
 				toJSON(pathToFile+"sportsObjects.json");
+				sportObjects.remove(i);
 			}
 		}
 	}
