@@ -2,6 +2,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import enums.SportObjectType;
 import enums.StatusSportObject;
@@ -10,7 +11,7 @@ public class SportObject implements Serializable{
 	private int id;
 	private String name;
 	private SportObjectType type;
-	private String content;
+	private List<Integer> content;
 	private StatusSportObject status;
 	private Location location;	
 	//TODO LOGO
@@ -23,11 +24,11 @@ public class SportObject implements Serializable{
 	public SportObject() {
 		
 	}
-	public SportObject(String name, String content) {
+	public SportObject(String name, List<Integer> content) {
 		this.name = name;
 		this.content = content;
 	}
-	public SportObject(String name, SportObjectType type, String content, StatusSportObject status, Location location,
+	public SportObject(String name, SportObjectType type, List<Integer> content, StatusSportObject status, Location location,
 			double averageRating,String workTime) {
 		super();
 		this.name = name;
@@ -39,6 +40,19 @@ public class SportObject implements Serializable{
 		this.workTime = workTime;		
 	}
 	
+	public void addContent(int contentId) {
+		if(content == null) {
+			content = new ArrayList<Integer>();
+		}
+		content.add(contentId);
+	}
+	public void deleteContent(int contentId) {
+		for(int id : content) {
+			if(id == contentId) {
+				content.remove(contentId);
+			}
+		}
+	}
 	
 	public String getPath() {
 		return path;
@@ -70,10 +84,10 @@ public class SportObject implements Serializable{
 	public void setType(SportObjectType type) {
 		this.type = type;
 	}
-	public String getContent() {
+	public List<Integer> getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(List<Integer> content) {
 		this.content = content;
 	}
 	public StatusSportObject getStatus() {

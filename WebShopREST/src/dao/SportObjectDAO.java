@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
 import beans.SportObject;
+import beans.User;
 
 
 public class SportObjectDAO {
@@ -89,6 +90,34 @@ public class SportObjectDAO {
 				sportObjects.remove(i);
 				toJSON(pathToFile+"sportsObjects.json");
 			}
+		}
+	}
+	
+	public void addContent(int id, int contentId) {
+		for(SportObject so : sportObjects) {
+			if(so.getId() == id) {
+				so.addContent(contentId);
+			}
+		}
+		try {
+			toJSON(pathToFile+"sportsObjects.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
+	public void deleteContent(int id, int contentId) {
+		for(SportObject so : sportObjects) {
+			if(so.getId() == id) {
+				so.deleteContent(contentId);
+			}
+		}
+		try {
+			toJSON(pathToFile+"sportsObjects.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
 		}
 	}
 }

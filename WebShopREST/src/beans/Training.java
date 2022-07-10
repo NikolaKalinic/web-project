@@ -14,6 +14,7 @@ public class Training {
 	private Date dateTime;	
 	private String describe;
 	private boolean canceled;
+	private String path;
 	//TODO SLIKA
 	
 	public Training() {
@@ -33,6 +34,12 @@ public class Training {
 	}
 	
 
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public boolean getCanceled() {
 		return canceled;
 	}
