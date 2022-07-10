@@ -16,6 +16,8 @@ import beans.Comment;
 import beans.SportObject;
 import enums.CommentStatus;
 import enums.StatusSportObject;
+import beans.User;
+
 
 
 public class SportObjectDAO {
@@ -135,6 +137,34 @@ public class SportObjectDAO {
 				toJSON(pathToFile+"sportsObjects.json");
 				return;
 			}
+		}
+	}
+	
+	public void addContent(int id, int contentId) {
+		for(SportObject so : sportObjects) {
+			if(so.getId() == id) {
+				so.addContent(contentId);
+			}
+		}
+		try {
+			toJSON(pathToFile+"sportsObjects.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
+		}
+	}
+	
+	public void deleteContent(int id, int contentId) {
+		for(SportObject so : sportObjects) {
+			if(so.getId() == id) {
+				so.deleteContent(contentId);
+			}
+		}
+		try {
+			toJSON(pathToFile+"sportsObjects.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
 		}
 	}
 }
