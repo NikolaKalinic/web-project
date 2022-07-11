@@ -6,7 +6,8 @@ Vue.component("users",{
 	     	searchName: '',
 	     	searchUsername: '',
 	     	role:null,
-	     	type:null
+	     	type:null,
+	     	currentUser: {}
 		}
 	},
 	template: `
@@ -82,17 +83,19 @@ Vue.component("users",{
 				    			<th>Username</th>
 				    			<th>Gender</th>
 				    			<th>Email</th>
-				    			<th>Type</th>		
+				    			<th>Type</th>	
+				    			<th>More</th>	
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="u in users">
+				    		<tr v-for="u in users" v-if="u.deleted == false">
 				    			<td>{{u.firstName}}</td>
 				    			<td>{{u.lastName}}</td>
 				    			<td>{{u.username}}</td>
 				    			<td>{{u.gender}}</td>
 				    			<td>{{u.email}}</td>
-				    			<td>{{u.role}}</td>		
+				    			<td>{{u.role}}</td>	
+				    			<td><button type="button" v-on:click="deleteUser(u.id)" class="btn btn-light btn-sm">Delete</button></td>	
 				    		</tr>
 				    		</tbody>
 				    	</table>    
@@ -105,6 +108,9 @@ Vue.component("users",{
 		axios
 		.get('rest/users')
 		.then(response => (this.users = response.data))
+		axios
+		.get('rest/currentUser')
+		.then(response => (this.currentUser = response.data))
 	},	
 	
    methods: {
@@ -130,6 +136,20 @@ Vue.component("users",{
        		axios
        		.get('rest/users/filterType'+event.target.value)
        		.then(response=>(this.users = response.data))
-    		}
+    		},
+    	deleteUser: function(id){
+			if(this.currentUser.id == id){
+				alert("You can't delete yourself!");
+				return;
+			}
+			r = confirm("Are you sure?")
+			if(r){
+			axios
+			.put('rest/users/delete-' + id)
+			.then(response => 	axios
+								.get('rest/users')
+								.then(response => (this.users = response.data)))	
+			}
+		}
     }
 });
