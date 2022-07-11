@@ -7,7 +7,8 @@ Vue.component("membership-fee", {
 			mode: 'BROWSE',
 			promoCode: null,
 			validPromoCode: null,
-			used: false
+			used: false,
+			bonusFromCustomerType:0
 			
 	    }
 	}, 
@@ -126,6 +127,16 @@ Vue.component("membership-fee", {
 			axios
 			.get('rest/membership-fee/' + id)
 			.then(response =>{this.selectedMemebershipFee = response.data;
+			
+			
+			if(this.user.type.name == "Bronze")	
+				this.selectedMemebershipFee.price = this.selectedMemebershipFee.price - (this.selectedMemebershipFee.price * 0.05)			
+			else if(this.user.type.name == "Silver")
+				this.selectedMemebershipFee.price = this.selectedMemebershipFee.price - (this.selectedMemebershipFee.price * 0.1)	
+			else if(this.user.type.name == "Gold")
+			
+			
+				this.selectedMemebershipFee.price = this.selectedMemebershipFee.price - (this.selectedMemebershipFee.price * 0.2)
 			 this.selectedMemebershipFee.expirationDate = new Date();
 			 if (this.selectedMemebershipFee.type == 'Monthly') {				
 				this.selectedMemebershipFee.expirationDate.setDate(this.selectedMemebershipFee.expirationDate.getDate() + 31);				
@@ -136,7 +147,12 @@ Vue.component("membership-fee", {
 			}
 			 });
 			this.mode = 'SELECT';	
-			this.used = false;			
+			this.used = false;
+			
+			
+			
+				
+			
 		},
 		checkPromoCode: function(){
 			if(this.promoCode == null){
