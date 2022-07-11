@@ -6,7 +6,10 @@ Vue.component("object-info",{
 			user : null,
 			comments:null,
 			name:null,
-			mark:-1
+			mark:-1,
+			contents: [],
+			coaches: [],
+			trainings: []
 		}
 	},
 	template: `
@@ -197,73 +200,43 @@ Vue.component("object-info",{
             </div>
           </div>
         </div>
+        
+        <!-- CONTENTS!!!!!!! -->
+        
         <div class="row">
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        	<h2>Contents</h2>
+          <div class="card mb-4" v-for="content in object.content">
+				          		<div class="card-body text-center" v-for="c in contents" v-if="c.id == content && c.deleted == false">
+				          			<img v-bind:src="c.path" :alt="image" width="60" height="60" />				            		
+				            		<h3 class="card-title mb-3" >
+				            			{{c.name}}
+				            		</h3>
+				            		<h4>{{c.type}}</h4>
+				            		<p>
+				            			{{c.description}}
+				            		</p>	
+				            		<table class="table table-striped table-dark mt-3" v-if="c.trainingId != null">
+						    			<thead>
+							    		<tr>
+							    			<th>Logo</th>
+							    			<th>Name</th>
+							    			<th>Trainer</th>
+							    			<th>Price</th>							    										    				
+							    		</tr>
+							    		</thead>
+							    		<tbody>
+							    		<tr v-for="tid in c.trainingId">
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false">{{t.name}}</td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-for="coach in coaches" v-if="coach.id == t.coach">{{coach.firstName}} {{coach.lastName}}</span><span v-else>None</span></td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-if="t.price != 0">{{t.price}}rsd</span><span v-else>Free</span></td>							    				
+							    		</tr>
+							    		</tbody>
+							    	</table>		            						            		
+				            		
+				          		</div>
+							</div>
+          
         </div>
       </div>
     </div>
@@ -285,6 +258,18 @@ Vue.component("object-info",{
 		axios
 		.get('rest/comments/object='+this.id)
 		.then(response =>{this.comments = response.data;})
+		
+		axios
+		.get('rest/contents')
+		.then(response => {this.contents = response.data});
+		
+		axios
+		.get('rest/users/coaches')
+		.then( response => { this.coaches = response.data});
+		
+		axios
+		.get('rest/trainings')
+		.then(response => {this.trainings = response.data});
 		
 	},
 	methods: {

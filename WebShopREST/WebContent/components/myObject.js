@@ -7,7 +7,8 @@ Vue.component("my-object",{
 			coachWhoWork:null,
 			objects: null,
 			contents: null,
-			trainings: null
+			trainings: null,
+			coaches: []
 		}
 	},
 	template:`
@@ -28,7 +29,7 @@ Vue.component("my-object",{
 			    </div>
 			  </div>
 			</nav>
-			<section style="background-color: #eee;">
+			<section style="background-color: #eee;" v-if="user.sportObjectId != 0">
   				<div class="container py-5">
 				    <div class="row">
 				      	<div class="col-lg-4">
@@ -66,7 +67,8 @@ Vue.component("my-object",{
 							    		<tr>
 							    			<th>Logo</th>
 							    			<th>Name</th>
-							    			<th>Type</th>
+							    			<th>Trainer</th>
+							    			<th>Price</th>
 							    			<th>More</th>							    				
 							    		</tr>
 							    		</thead>
@@ -74,7 +76,8 @@ Vue.component("my-object",{
 							    		<tr v-for="tid in c.trainingId">
 							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
 							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false">{{t.name}}</td>
-							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false">{{t.type}}</td>	
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-for="coach in coaches" v-if="coach.id == t.coach">{{coach.firstName}} {{coach.lastName}}</span><span v-else>None</span></td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-if="t.price != 0">{{t.price}}rsd</span><span v-else>Free</span></td>	
 							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><button type="button" v-on:click="removeTraining(tid)" class="btn btn-light btn-sm">Remove</button></td>						    				
 							    		</tr>
 							    		</tbody>
@@ -211,23 +214,29 @@ Vue.component("my-object",{
 				    </div>
 				</div>
 			</section>
-			
+			<section style="background-color: #eee;" v-else>
+				<div class="container">
+					<h2>{{user.firstName}} {{user.lastName}} has no sport object</h2>
+				</div>
+			</section>
 		</div>
 	`,
 	 mounted () {
 		axios
 		.get('rest/currentUser')
 		.then(response => {
-							this.user= response.data;
-							axios
-							.get('rest/objects/'+this.user.sportObjectId)
-							.then(response => {this.object = response.data;});
-							axios
-							.get('rest/users/object='+this.user.sportObjectId)
-							.then(response => (this.usersWhoVisitedObject=response.data));
-							axios
-							.get('rest/users/objId='+this.user.sportObjectId)
-							.then(response => (this.coachWhoWork=response.data));
+							this.user= response.data;							
+							if(this.user.sportObjectId != 0){
+								axios
+								.get('rest/users/objId='+this.user.sportObjectId)
+								.then(response => (this.coachWhoWork=response.data));
+								axios
+								.get('rest/objects/'+this.user.sportObjectId)
+								.then(response => {this.object = response.data;});
+								axios
+								.get('rest/users/object='+this.user.sportObjectId)
+								.then(response => (this.usersWhoVisitedObject=response.data));
+							}							
 							});
 		axios
 		.get('rest/objects')
@@ -238,6 +247,9 @@ Vue.component("my-object",{
 		axios
 		.get('rest/trainings')
 		.then(response => {this.trainings = response.data});
+		axios
+		.get('rest/users/coaches')
+		.then( response => { this.coaches = response.data});
 		
 	},
 	methods: {

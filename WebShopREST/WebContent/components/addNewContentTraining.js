@@ -3,7 +3,8 @@ Vue.component("new-content-training", {
 		return {
 			id: -1,
 			content: null,
-			trainingId: -1			
+			trainingId: -1,
+			coaches: []			
 		}
 	}, 
 	template: `
@@ -87,6 +88,35 @@ Vue.component("new-content-training", {
                       </div>
                     </div>
                  <div class="row">
+                 	<div class="col-md-6 mb-4 d-flex align-tems-center">
+                 		<div class="form-outline">
+                 			<div class="form-group"> 
+									<label  class="control-label">Coach</label>
+									<select v-model="coach" class="browser-default custom-select form-control form-control-lg">
+									<option value="0" >None</option>
+								    <option v-for="item in coaches" :value="item.id">{{item.firstName}} {{item.lastName}}</option>
+									</select>
+								</div>
+                 		</div>
+                 	</div>
+                 </div>
+                 <div class="row">
+                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                      <div class="form-outline datepicker w-100">
+                        <label for="durationInMinutes" class="form-label"
+                          >Price</label
+                        >
+                        <input
+                          type="text"
+                          name="price"
+                          v-model="price"
+                          class="form-control form-control-lg"
+                          id="price"
+                          placeholder="Price"                                                    
+                        />
+                      </div>
+                    </div>
+                 <div class="row">
                       <div class="col-md-6 mb-4 pb-2">
                         <div class="form-outline">
                           <label class="form-label" for="">Image</label>
@@ -124,6 +154,9 @@ Vue.component("new-content-training", {
 		axios
 		.get('rest/contents/' + this.$route.params.id)
 		.then(response => {this.content = response.data});		
+		axios
+		.get('rest/users/coaches')
+		.then( response => { this.coaches = response.data});
 	},
 	methods: {
 		submit: function(){
@@ -135,9 +168,10 @@ Vue.component("new-content-training", {
 				sportObject: null,
 				durationInMinutes: this.durationInMinutes,	
 				dateTime: null,
-				describe: null,
-				coach: null,		
-        		path: "images/"+document.getElementById('path').files[0].name
+				describe: null,				
+				coach: this.coach,		
+        		path: "images/"+document.getElementById('path').files[0].name,
+        		price: this.price
 			})
 			.then(response =>{this.trainingId = response.data,
 				axios
