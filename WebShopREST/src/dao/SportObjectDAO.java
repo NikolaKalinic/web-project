@@ -14,7 +14,9 @@ import com.google.gson.stream.JsonReader;
 import Personal.PersonalConfig;
 import beans.Comment;
 import beans.SportObject;
+import dto.SearchObjectDTO;
 import enums.CommentStatus;
+import enums.SportObjectType;
 import enums.StatusSportObject;
 
 
@@ -87,17 +89,47 @@ public class SportObjectDAO {
 		return null;
 	}
 	
-	public ArrayList<SportObject> getSearch(String name, String type, String location, String averageRating){
+	public ArrayList<SportObject> search(SearchObjectDTO dto){
 		ArrayList<SportObject> searchedObjects = new ArrayList<SportObject>();
 		for(SportObject so : getAll()) {
-			if(so.getName().toLowerCase().startsWith(name.toLowerCase()) && so.getType().toString().toLowerCase().startsWith(type.toLowerCase()) && 
-			so.getLocation().getAddress().getState().toLowerCase().startsWith(location.toLowerCase()) && String.valueOf(so.getAverageRating()).startsWith(averageRating)) {
-				searchedObjects.add(so);
+			if(dto.getAvg()==0) {
+				if(so.getName().toLowerCase().startsWith(dto.getSearchName().toLowerCase()) &&
+						 so.getType().toString().toLowerCase().startsWith(dto.getSearchType().toLowerCase()) &&
+				(so.getLocation().getAddress().getState().toLowerCase().startsWith(dto.getLocation().toLowerCase())||so.getLocation().getAddress().getPlace().toLowerCase().startsWith(dto.getLocation().toLowerCase()))) {
+					searchedObjects.add(so);
+				}	
+			}else {
+				if(so.getName().toLowerCase().startsWith(dto.getSearchName().toLowerCase()) &&
+						 so.getType().toString().toLowerCase().startsWith(dto.getSearchType().toLowerCase()) &&
+						 Double.toString(so.getAverageRating()).startsWith(Double.toString(dto.getAvg())) &&
+				(so.getLocation().getAddress().getState().toLowerCase().startsWith(dto.getLocation().toLowerCase())||so.getLocation().getAddress().getPlace().toLowerCase().startsWith(dto.getLocation().toLowerCase()))) {
+					searchedObjects.add(so);
+				}
 			}
-		}
+			}
 		return searchedObjects;
 	}
 	
+	public ArrayList<SportObject> filter(String type){
+		ArrayList<SportObject> filteredObjects = new ArrayList<SportObject>();
+		for(SportObject so : getAll()) {
+			if(so.getType().toString().equals(type)) {
+				filteredObjects.add(so);
+			}
+		}
+		return filteredObjects;
+	}
+	
+	
+	public ArrayList<SportObject> filterOpen(){
+		ArrayList<SportObject> filteredObjects = new ArrayList<SportObject>();
+		for(SportObject so : getAll()) {
+			if(so.getStatus() == StatusSportObject.Open) {
+				filteredObjects.add(so);
+			}
+		}
+		return filteredObjects;
+	}
 	public void deleteById(int id) throws FileNotFoundException{
 		for(int i = 0; i<sportObjects.size();i++) {
 			if(sportObjects.get(i).getId() == id) {

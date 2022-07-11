@@ -6,7 +6,8 @@ Vue.component("sportsObjects", {
 	      searchName: '',
 	      searchType: '',
 	      searchLocation: '',
-	      searchAverageRating: ''
+	      searchAverageRating: '',
+	      type:null
 	    }
 	},
 	    template: `
@@ -31,22 +32,38 @@ Vue.component("sportsObjects", {
 	    				<div class="col-8 d-flex justify-content-center" >
 		    				<h2>Review of sport objects</h2>
 		    			</div>
-		    			<div class="col-4">
-		    				<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
-		    			</div>
+		    			
 		    		</div>
 		    		<div class="row">
-		    			<div class="col-3">
+		    			<div class="col-2">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
 		    			</div>
-		    			<div class="col-3">
+		    			<div class="col-2">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchType" placeholder="Type..." />
 		    			</div>
 		    			<div class="col-3">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchLocation" placeholder="Location..." />
 		    			</div>
-		    			<div class="col-3">
+		    			<div class="col-1">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchAverageRating" placeholder="Average rating..." />
+		    			</div>
+		    			<div class="col-2">
+		    				<select  id="type" v-model="type" @change="onChange($event)" class="browser-default custom-select form-control form-control-lg">
+		    				<option value="None">None</option>
+							  <option value="Gym">Gym</option>
+							  <option value="Pool">Pool</option>
+							  <option value="SportCenter">SportCenter</option>
+							  <option value="DanceStudio">DanceStudio</option>
+							</select>
+		    			</div>
+	    				<div class="col-1">
+							  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @change="check($event)">
+							  <label class="form-check-label" for="flexSwitchCheckDefault">Open</label>
+	    				</div>
+		    			<div class="col-1">
+		    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
+					          <span class="glyphicon glyphicon-search"></span> Search 
+					        </button>
 		    			</div>
 		    			
 		    		</div>
@@ -65,7 +82,7 @@ Vue.component("sportsObjects", {
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="so in filteredResources">
+				    		<tr v-for="so in sportsObjects">
 				    			<td>{{so.name}}</td>
 				    			<td>{{so.content}}</td>
 				    			<td>{{so.type}}</td>
@@ -88,13 +105,44 @@ Vue.component("sportsObjects", {
           .then(response => {
 							this.sportsObjects = response.data;
 							})
+							
+		
     },
     methods:{
 		showInfo: function(id){
 			router.push(`/object/${id}`);
+		},
+		search: function(){
+			axios
+			.put('rest/objects/search',{
+				"searchName":this.searchName,
+				"searchType":this.searchType,
+				"location": this.searchLocation,
+				"avg":this.searchAverageRating
+			})
+			.then(response =>{this.sportsObjects = response.data})
+		},
+		onChange:function(event){
+       		axios
+       		.get('rest/objects/filter/'+event.target.value)
+       		.then(response=>(this.sportsObjects = response.data))
+    },
+    check (e) {
+	  this.$nextTick(() => {
+	     if (e.target.checked) {
+       		axios
+       		.get('rest/objects/filterOpen')
+       		.then(response=>((this.sportsObjects = response.data)))
+    	}else{
+			axios
+       		.get('rest/objects/')
+       		.then(response=>((this.sportsObjects = response.data)))
 		}
+	  })
+	}
+		
 	},
-    computed: {
+    /*computed: {
     filteredResources (){
       if(this.searchName){		
       return this.sportsObjects.filter((item)=>{		
@@ -132,7 +180,7 @@ Vue.component("sportsObjects", {
         return this.sportsObjects;
       }
     }
-  }
+  } */
    	
     
 });

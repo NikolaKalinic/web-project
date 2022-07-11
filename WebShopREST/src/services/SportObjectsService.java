@@ -1,6 +1,7 @@
 package services;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,8 @@ import beans.Product;
 import beans.SportObject;
 import dao.ProductDAO;
 import dao.SportObjectDAO;
+import dto.SearchObjectDTO;
+import enums.SportObjectType;
 
 @Path("/objects")
 public class SportObjectsService {
@@ -49,7 +52,24 @@ public class SportObjectsService {
 	}
 	
 	
-	
+	@GET
+	@Path("/filter/{type}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportObject> filter(@PathParam("type") String type) {
+		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		if(type.equals(SportObjectType.None.toString())) {
+			return getAll();
+		}
+		else
+			return dao.filter(type);
+	}
+	@GET
+	@Path("/filterOpen")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportObject> filterOpen(@PathParam("type") String type) {
+		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+			return dao.filterOpen();
+	}
 	
 	@GET
 	@Path("/{id}")
@@ -65,6 +85,14 @@ public class SportObjectsService {
 	public int create(SportObject s) throws FileNotFoundException {
 		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
 		return dao.create(s);
+	}
+	
+	@PUT
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<SportObject> search(SearchObjectDTO dto){
+		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		return dao.search(dto);
 	}
 	
 	
