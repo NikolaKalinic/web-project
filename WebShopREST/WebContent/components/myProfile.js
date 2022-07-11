@@ -47,7 +47,7 @@ Vue.component("myProfile", {
                     <div v-if="user.role === 'Customer' && user.membershipFee != null && user.membershipFee.expirationDate > new Date()" class="col-md-12"><label class="labels">Membership fee</label><input disabled type="text" class="form-control" v-model="user.membershipFee.type"></div>  
                     <div v-else class="col-md-12"><label class="labels">Membership fee</label><input disabled type="text" class="form-control" ></div>                  
                     <div v-if="user.role === 'Customer' " class="col-md-12"><label class="labels">Number of points</label><input disabled type="text" class="form-control"  v-model="user.numberOfPoints"></div>
-                    <div v-if="user.role === 'Coach' " class="col-md-12"><label class="labels">Training history</label><input disabled type="text" class="form-control"  v-model="user.trainingHistory"></div>
+                    
                     <div v-if="user.role === 'Manager' " class="col-md-12"><label class="labels">Sport object id</label><input disabled type="text" class="form-control"  v-model="user.sportObjectId"></div>
                 </div>
                 

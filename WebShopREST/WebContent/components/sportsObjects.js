@@ -18,7 +18,7 @@ Vue.component("sportsObjects", {
 		      <a class="navbar-brand" href="#">Fitness</a>
 		    </div>
 		    <div class="topnav">
-			  <a class="active" href="/web-project/#/">Home</a>
+			 
 			</div>
 		    <div class="nav navbar-nav navbar-right">
 		      <a href="/web-project/#/login"><span class="glyphicon glyphicon-user"></span> Login<li></a>

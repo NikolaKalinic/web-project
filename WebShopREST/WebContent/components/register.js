@@ -5,11 +5,22 @@ Vue.component("register", {
 	},
 	    template: ` 
     	<div>	
-		 <div class="topnav">
-		      <a href="/web-project/#/">Home</a>
-		      <a href="/web-project/#/login">Login</a>
-		      <a class="active" href="/web-project/#/register">Register</a>
-    	</div>
+		 <nav class="navbar navbar-inverse">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">Fitness</a>
+			    </div>
+			    <div class="topnav">
+				  <a href="/web-project/#/">Home</a>
+				  <a href="/web-project/#/login">Login</a>
+				  <a class="active" href="/web-project/#/register">Register</a>
+				</div>
+			    <div class="nav navbar-nav navbar-right" style="visibility: hidden">
+			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>
+			      <a href="/web-project/#/" on:click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+			    </div>
+			  </div>
+			</nav>
     <section class="vh-100 gradient-custom">
       <div id="app" class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
