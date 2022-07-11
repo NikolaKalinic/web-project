@@ -4,7 +4,11 @@ Vue.component("my-object",{
 			user:null,
 			object:null,
 			usersWhoVisitedObject:null,
-			coachWhoWork:null
+			coachWhoWork:null,
+			objects: null,
+			contents: null,
+			trainings: null,
+			coaches: []
 		}
 	},
 	template:`
@@ -25,13 +29,13 @@ Vue.component("my-object",{
 			    </div>
 			  </div>
 			</nav>
-			<section style="background-color: #eee;">
+			<section style="background-color: #eee;" v-if="user.sportObjectId != 0">
   				<div class="container py-5">
 				    <div class="row">
 				      	<div class="col-lg-4">
 				        	<div class="card mb-4">
 				          		<div class="card-body text-center">
-				            		<img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+				            		<img v-bind:src="object.path" alt="avatar"
 				              		class="rounded-circle img-fluid" style="width: 150px;">
 									<h5 class="my-3">{{object.name}}</h5>
 				            		<p class="text-muted mb-1">{{object.location.address.place}} {{object.location.address.zipCode}}</p>
@@ -41,6 +45,50 @@ Vue.component("my-object",{
 				            		</div>
 				          		</div>
 							</div>
+							<div class="p-1">
+								<h2 style="display: inline; margin: 0px 120px 0px 0px;">Contents</h2>								
+								<input type="button" v-on:click="newContent()" class="btn btn-secondary" value="New content"/>							
+							</div>
+							
+			<!-- CONTENT !!!!!!!!!!!!!!!!!!!!!! -->
+							 
+							<div class="card mb-4" v-for="content in object.content">
+				          		<div class="card-body text-center" v-for="c in contents" v-if="c.id == content && c.deleted == false">
+				          			<img v-bind:src="c.path" :alt="image" width="60" height="60" />				            		
+				            		<h3 class="card-title mb-3" >
+				            			{{c.name}}
+				            		</h3>
+				            		<h4>{{c.type}}</h4>
+				            		<p>
+				            			{{c.description}}
+				            		</p>	
+				            		<table class="table table-striped table-dark mt-3" v-if="c.trainingId != null">
+						    			<thead>
+							    		<tr>
+							    			<th>Logo</th>
+							    			<th>Name</th>
+							    			<th>Trainer</th>
+							    			<th>Price</th>
+							    			<th>More</th>							    				
+							    		</tr>
+							    		</thead>
+							    		<tbody>
+							    		<tr v-for="tid in c.trainingId">
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false">{{t.name}}</td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-for="coach in coaches" v-if="coach.id == t.coach">{{coach.firstName}} {{coach.lastName}}</span><span v-else>None</span></td>
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><span v-if="t.price != 0">{{t.price}}rsd</span><span v-else>Free</span></td>	
+							    			<td v-for="t in trainings" v-if="t.id == tid && t.canceled == false"><button type="button" v-on:click="removeTraining(tid)" class="btn btn-light btn-sm">Remove</button></td>						    				
+							    		</tr>
+							    		</tbody>
+							    	</table>			            						            		
+				            		<button v-on:click="changeContent(content)" class="btn btn-primary">Change</button>
+				            		<button class="btn btn-primary" v-on:click="newTraining(content)">Add training</button>
+				            		<button class="btn btn-primary" v-on:click="deleteContent(content)">Delete</button>
+				          		</div>
+							</div>
+							
+							
 				           <!-- <div class="overflow-auto">
 				        		<div class="card mb-4 mb-lg-0">
 									<div class="card-body p-0">
@@ -166,24 +214,72 @@ Vue.component("my-object",{
 				    </div>
 				</div>
 			</section>
-			
+			<section style="background-color: #eee;" v-else>
+				<div class="container">
+					<h2>{{user.firstName}} {{user.lastName}} has no sport object</h2>
+				</div>
+			</section>
 		</div>
 	`,
 	 mounted () {
 		axios
 		.get('rest/currentUser')
 		.then(response => {
-							this.user= response.data;
-							axios
-							.get('rest/objects/'+this.user.sportObjectId)
-							.then(response => {this.object = response.data;});
-							axios
-							.get('rest/users/object='+this.user.sportObjectId)
-							.then(response => (this.usersWhoVisitedObject=response.data));
-							axios
-							.get('rest/users/objId='+this.user.sportObjectId)
-							.then(response => (this.coachWhoWork=response.data));
+							this.user= response.data;							
+							if(this.user.sportObjectId != 0){
+								axios
+								.get('rest/users/objId='+this.user.sportObjectId)
+								.then(response => (this.coachWhoWork=response.data));
+								axios
+								.get('rest/objects/'+this.user.sportObjectId)
+								.then(response => {this.object = response.data;});
+								axios
+								.get('rest/users/object='+this.user.sportObjectId)
+								.then(response => (this.usersWhoVisitedObject=response.data));
+							}							
 							});
+		axios
+		.get('rest/objects')
+		.then(response => {this.objects = response.data});
+		axios
+		.get('rest/contents')
+		.then(response => {this.contents = response.data});
+		axios
+		.get('rest/trainings')
+		.then(response => {this.trainings = response.data});
+		axios
+		.get('rest/users/coaches')
+		.then( response => { this.coaches = response.data});
 		
+	},
+	methods: {
+	newContent : function(){		
+			router.push(`/new-content/` + this.object.id);
+		},
+	changeContent : function(id) {
+			router.push('/change-content/' + id);
+		},
+	newTraining : function(id){
+			router.push('/new-content-training/' + id);
+	},
+	deleteContent: function(id){
+			r = confirm("Are you sure?")
+			if(r){
+				axios
+				.delete('rest/contents/' + id);			
+					
+			}
+			
+	},
+	removeTraining: function(id){
+			r = confirm("Are you sure?")
+			if(r){
+				axios
+				.put('rest/trainings/cancel-' + id)					
+			}
 	}
+	
+	}	
+	
+	
 });

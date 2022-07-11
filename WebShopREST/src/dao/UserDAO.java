@@ -123,6 +123,16 @@ public class UserDAO {
 		return retVal;
 	}
 	
+	public ArrayList<User> getCoaches(){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u: users) {
+			if(u.getRole() == Role.Coach) {
+				retVal.add(u);
+			}
+		}
+		return retVal;
+	}
+	
 	public User getByUsername(String username) {
 		for(User u : users) {
 			if(u.getUsername().equals(username))
@@ -246,9 +256,9 @@ public class UserDAO {
 		}
 	}
 	
-	public void updateTrainings(String username, int trainingId) {
+	public void updateTrainings(int id, int trainingId) {
 		for(User u : users) {
-			if(u.getUsername().equals(username)) {
+			if(u.getId() == id) {
 				u.addTraining(trainingId);
 			}
 		}

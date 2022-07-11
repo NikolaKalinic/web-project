@@ -11,11 +11,13 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
+import beans.Content;
 import beans.SportObject;
 import beans.Training;
 
 public class TrainingDAO {
 
+	private int trainingId = 106;
 	private ArrayList<Training> trainings;
 	private String pathToFile = PersonalConfig.PROJECT_FOLDER_PATH + "\\WebContent\\";
 	private static final java.lang.reflect.Type TRAINING_TYPE = new TypeToken<ArrayList<Training>>() {
@@ -40,23 +42,24 @@ public class TrainingDAO {
         out.close();
     }
     
-    public void create(Training s) throws FileNotFoundException {
+    public int create(Training s) throws FileNotFoundException {
 		s.setId(getNewId());
 		s.setCanceled(false);
 		trainings.add(s);
 		toJSON(pathToFile+"trainings.json");
+		return s.getId();
 	}
 	
 	private int getNewId() {
 		if(trainings.isEmpty())
 			return 100;
-		int maxId = trainings.get(0).getId();
+		int maxId = trainings.get(trainings.size() - 1).getId();
 		for(Training so : trainings) {
 			if(maxId < so.getId()) {
 				maxId = so.getId();
 			}
 		}
-		return maxId+1;
+		return maxId+1;		
 	}
 	
 	public ArrayList<Training> getAll(){

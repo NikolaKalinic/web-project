@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,6 +23,8 @@ import dao.ProductDAO;
 import dao.SportObjectDAO;
 import dto.SearchObjectDTO;
 import enums.SportObjectType;
+
+import dao.UserDAO;
 
 @Path("/objects")
 public class SportObjectsService {
@@ -102,5 +105,29 @@ public class SportObjectsService {
 	public void deleteById(@PathParam("id") int id) throws FileNotFoundException{
 		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
 		dao.deleteById(id);
+	}
+	
+	@PUT
+	@Path("/addContent-{id}/{objectId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("objectId") int objectId, @PathParam("id") int id) {
+		System.out.println("objekat" + objectId);
+		System.out.println("kontent" + id);
+		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");		
+		dao.addContent(objectId, id);		
+		
+	}
+	
+	@DELETE
+	@Path("/deleteContent-{id}/{objectId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteContent(@PathParam("objectId") int objectId, @PathParam("id") int id) {
+		System.out.println("objekat" + objectId);
+		System.out.println("kontent" + id);
+		SportObjectDAO dao = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");		
+		dao.deleteContent(objectId, id);		
+		
 	}
 }

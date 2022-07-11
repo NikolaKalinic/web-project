@@ -85,17 +85,22 @@ Vue.component("training", {
 			<div class="container">
 				<div class="row" v-if="user.role == 'Customer'">
 		    		<div class="col">
+		    			<button type="button" v-on:click="newTraining()" class="btn btn-primary" >Add new training</button>		    					    			
 			    		<table class="table table-striped table-dark">
 			    			<thead>
 				    		<tr>
+				    			<th>Image</th>
 				    			<th>Name</th>
+				    			<th>Type</th>
 				    			<th>Sport Object</th>
 				    			<th>Date</th>				    							    				
 				    		</tr>
 				    		</thead>
 				    		<tbody >
 					    		<tr v-for="t in trainings">
+					    			<td v-for="ut in user.trainingId" v-if="ut == t.id && t.dateTime > new Date() - 2592000000  && t.canceled == false"><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
 					    			<td v-for="ut in user.trainingId" v-if="ut == t.id && t.dateTime > new Date() - 2592000000  && t.canceled == false">{{t.name}}</td>
+					    			<td v-for="ut in user.trainingId" v-if="ut == t.id && t.dateTime > new Date() - 2592000000  && t.canceled == false">{{t.type}}</td>
 					    			<td v-for="ut in user.trainingId" v-if="ut == t.id && t.dateTime > new Date() - 2592000000  && t.canceled == false"><span v-for="so in sportObjects" v-if="so.id == t.sportObject">{{so.name}}</span></td>
 					    			<td v-for="ut in user.trainingId" v-if="ut == t.id && t.dateTime > new Date() - 2592000000  && t.canceled == false">{{t.dateTime | dateFormat('DD.MM.YYYY.')}}</td>				    						    				
 					    		</tr>
@@ -115,6 +120,7 @@ Vue.component("training", {
 		    		<table class="table table-striped table-dark">
 			    			<thead>
 				    		<tr>
+				    			<th>Image</th>
 				    			<th>Name</th>
 				    			<th>Sport object</th>
 				    			<th>Date</th>					    							    				
@@ -122,6 +128,7 @@ Vue.component("training", {
 				    		</thead>
 				    		<tbody >
 					    		<tr v-for="t in this.coachTrainings" v-if="t.dateTime > new Date() && t.type == 'Group' ">
+					    			<td><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
 					    			<td>{{t.name}}</td>
 					    			<td v-for="so in sportObjects"  v-if="so.id == t.sportObject">{{so.name}}</td>
 					    			<td>{{t.dateTime | dateFormat('DD.MM.YYYY.')}}</td>	
@@ -133,6 +140,7 @@ Vue.component("training", {
 		    		<table class="table table-striped table-dark">
 			    			<thead>
 				    		<tr>
+				    			<th>Image</th>
 				    			<th>Name</th>
 				    			<th>Customer</th>
 				    			<th>Sport object</th>
@@ -142,6 +150,7 @@ Vue.component("training", {
 				    		</thead>
 				    		<tbody >
 					    		<tr v-for="t in this.coachTrainings" v-if="t.dateTime > new Date() && t.type == 'Personal' && t.canceled == false">
+					    			<td><img class="img-circle" v-bind:src="t.path" :alt="image" width="50" height="50" /></td>
 					    			<td>{{t.name}}</td>
 					    			<td>{{getCustomerName(t.id)}} {{customerName}} </td>
 					    			<td v-for="so in sportObjects"  v-if="so.id == t.sportObject">{{so.name}}</td>
@@ -232,6 +241,9 @@ Vue.component("training", {
 							.then(response=>{this.coachTrainings = response.data})});
 			}
 			
+		},
+		newTraining: function(){
+			router.push('/new-training');
 		}
 		
 		

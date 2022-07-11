@@ -80,9 +80,10 @@ public class TrainingService {
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void create(Training s) throws FileNotFoundException {
+	public int create(Training s) throws FileNotFoundException {
+		System.out.println("USAO SAM");
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
-		dao.create(s);
+		return dao.create(s);
 	}
 	
 	

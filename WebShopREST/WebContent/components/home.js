@@ -107,8 +107,7 @@ Vue.component("home", {
 				    		<tr>
 				    			<th>Image</th>
 				    			<th>Name</th>
-				    			<th>Type</th>
-				    			<th>Content</th>
+				    			<th>Type</th>				    			
 				    			<th>Status</th>
 				    			<th>Location</th>
 				    			<th>Average rating</th>	
@@ -120,8 +119,7 @@ Vue.component("home", {
 				    		<tr v-for="so in filteredResources">
 				    			<td><img v-bind:src="so.path" :alt="selectedDog" width="100" height="100" /></td>
 				    			<td>{{so.name}}</td>
-				    			<td>{{so.content}}</td>
-				    			<td>{{so.type}}</td>
+				    			<td>{{so.type}}</td>				    			
 				    			<td>{{so.status}}</td>
 				    			<td>{{so.location.address.state}}, {{so.location.address.place}}</td>
 				    			<td>{{so.averageRating}}</td>

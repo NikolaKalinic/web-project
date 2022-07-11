@@ -14,6 +14,8 @@ public class Training {
 	private Date dateTime;	
 	private String describe;
 	private boolean canceled;
+	private int price;
+	private String path;
 	//TODO SLIKA
 	
 	public Training() {
@@ -32,7 +34,19 @@ public class Training {
 		this.canceled = canceled;
 	}
 	
-
+	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public boolean getCanceled() {
 		return canceled;
 	}

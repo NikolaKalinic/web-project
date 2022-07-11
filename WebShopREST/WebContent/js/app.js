@@ -14,6 +14,11 @@ const MyObject = { template: '<my-object></my-object>'}
 const AddNewUser = { template: '<add-new-user></add-new-user>'}
 const AddNewObject = { template: '<add-new-object></add-new-object>'}
 const AddNewManager = { template: '<add-new-manager></add-new-manager>'}
+const newContent = { template: '<new-content></new-content'}
+const changeContent = { template : '<change-content></change-content'}
+const addNewContentTraining = { template : '<new-content-training></new-content-training>'}
+const addNewTraining = { template: '<new-training></new-training>'}
+
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -32,7 +37,13 @@ const router = new VueRouter({
 	    { path: '/my-object', component: MyObject},
 	    { path: '/add-new-user', component: AddNewUser},
 	    { path: '/add-new-object', component:AddNewObject},
-	    { path: '/add-new-manager', component:AddNewManager}
+	    { path: '/add-new-manager', component:AddNewManager},
+	    { path: '/new-content/:id', component: newContent},
+	    { path: '/change-content/:id', component: changeContent},
+	    { path: '/new-content-training/:id', component: addNewContentTraining},
+	    { path: '/new-content-training/:id', component: addNewContentTraining},
+	    { path: '/new-training', component: addNewTraining}
+
 	  ]
 });
 
