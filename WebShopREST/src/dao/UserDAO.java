@@ -18,6 +18,7 @@ import beans.TrainingHistory;
 import beans.User;
 import dto.SearchObjectDTO;
 import dto.SearchUserDTO;
+import enums.CustomerTypeName;
 import enums.Role;
 
 public class UserDAO {
@@ -104,6 +105,18 @@ public class UserDAO {
 		}
 		return retVal;
 	}
+	
+	public ArrayList<User> filterType(CustomerTypeName type){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u : users) {
+			if(u.getType()!=null)
+				if(u.getType().getName() == type) {
+					retVal.add(u);
+				}
+		}
+		return retVal;
+	}
+	
 	public ArrayList<User> filterRole(Role role){
 		ArrayList<User> retVal = new ArrayList<User>();
 		for(User u : users) {

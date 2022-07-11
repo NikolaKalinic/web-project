@@ -5,7 +5,8 @@ Vue.component("users",{
 			searchSurname: '',
 	     	searchName: '',
 	     	searchUsername: '',
-	     	role:null
+	     	role:null,
+	     	type:null
 		}
 	},
 	template: `
@@ -48,12 +49,21 @@ Vue.component("users",{
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchUsername" placeholder="Username..." />
 		    			</div>
 		    			<div class="col-2">
-		    				<select  id="type" placeholder="Role..." v-model="role" @change="onChange($event)" class="browser-default form-control form-control-lg">
+		    				<select  id="role" placeholder="Role..." v-model="role" @change="onChange($event)" class="browser-default form-control form-control-lg">
 		    				<option value="None" selected>None</option>
 							  <option value="Admin">Admin</option>
 							  <option value="Customer">Customer</option>
 							  <option value="Coach">Coach</option>
 							  <option value="Manager">Manager</option>
+							</select>
+		    			</div>
+		    			<div class="col-2">
+		    				<select  id="type" placeholder="Customer Type..." v-model="type" @change="onChangeType($event)" class="browser-default form-control form-control-lg">
+		    				<option value="None" selected>None</option>
+							  <option value="Beginner">Beginner</option>
+							  <option value="Bronze">Bronze</option>
+							  <option value="Silver">Silver</option>
+							  <option value="Gold">Gold</option>
 							</select>
 		    			</div>
 		    			<div class="col-1">
@@ -114,6 +124,11 @@ Vue.component("users",{
 		onChange: function(event){
        		axios
        		.get('rest/users/filterRole'+event.target.value)
+       		.then(response=>(this.users = response.data))
+    		},
+    	onChangeType: function(event){
+       		axios
+       		.get('rest/users/filterType'+event.target.value)
        		.then(response=>(this.users = response.data))
     		}
     }

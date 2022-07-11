@@ -25,6 +25,7 @@ import dao.SportObjectDAO;
 import dao.UserDAO;
 import dto.SearchObjectDTO;
 import dto.SearchUserDTO;
+import enums.CustomerTypeName;
 import enums.Role;
 
 @Path("/users")
@@ -138,6 +139,18 @@ public class UserService {
 	public void deleteByUsername(@PathParam("username") String username) throws FileNotFoundException {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.deleteByUsername(username);
+	}
+	
+	@GET
+	@Path("/filterType{type}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<User> filterType(@PathParam("type") CustomerTypeName type){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		if(type.toString().equals("None"))
+			return (ArrayList<User>)getAll();
+		else
+			return dao.filterType(type);
 	}
 	
 	@GET
