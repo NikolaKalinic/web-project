@@ -3,7 +3,12 @@ Vue.component("home", {
 	    return {
 	      sportsObjects: null,
 	      searchQuery: '',
-	      user : null
+	      user : null,
+          searchName: '',
+	      searchType: '',
+	      searchLocation: '',
+	      searchAverageRating: '',
+	      type:null
 	      
 	    }
 	},
@@ -98,7 +103,40 @@ Vue.component("home", {
 		    				
 		    			</div>
 		    			<button type="button" class="btn btn-primary" v-on:click="addNewObject()" v-if="user.role=='Admin'">Add new object</button>
-		    				<input class="form-control my-2 py-1" type="text" v-model="searchQuery" placeholder="Search..." />
+		    			
+		    			<div class="row">
+		    			<div class="col-2">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
+		    			</div>
+		    			<div class="col-2">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchType" placeholder="Type..." />
+		    			</div>
+		    			<div class="col-3">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchLocation" placeholder="Location..." />
+		    			</div>
+		    			<div class="col-1">
+		    				<input class="form-control my-2 py-1" type="text" v-model="searchAverageRating" placeholder="Average rating..." />
+		    			</div>
+		    			<div class="col-2">
+		    				<select  id="type" v-model="type" @change="onChange($event)" class="browser-default custom-select form-control form-control-lg">
+		    				<option value="None">None</option>
+							  <option value="Gym">Gym</option>
+							  <option value="Pool">Pool</option>
+							  <option value="SportCenter">SportCenter</option>
+							  <option value="DanceStudio">DanceStudio</option>
+							</select>
+		    			</div>
+	    				<div class="col-1">
+							  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @change="check($event)">
+							  <label class="form-check-label" for="flexSwitchCheckDefault">Open</label>
+	    				</div>
+		    			<div class="col-1">
+		    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
+					          <span class="glyphicon glyphicon-search"></span> Search 
+					        </button>
+		    			</div>
+		    			
+		    		</div>
 		    		</div>
 		    		<div class="row">
 		    			<div class="col">
@@ -116,7 +154,7 @@ Vue.component("home", {
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="so in filteredResources">
+				    		<tr v-for="so in sportsObjects">
 				    			<td><img v-bind:src="so.path" :alt="selectedDog" width="100" height="100" /></td>
 				    			<td>{{so.name}}</td>
 				    			<td>{{so.type}}</td>				    			
@@ -155,30 +193,38 @@ Vue.component("home", {
 		},
 		addNewObject: function(){
 			router.push(`/add-new-object`);
-		}
+		},
+		search: function(){
+			axios
+			.put('rest/objects/search',{
+				"searchName":this.searchName,
+				"searchType":this.searchType,
+				"location": this.searchLocation,
+				"avg":this.searchAverageRating
+			})
+			.then(response =>{this.sportsObjects = response.data})
+		},
+		onChange:function(event){
+       		axios
+       		.get('rest/objects/filter/'+event.target.value)
+       		.then(response=>(this.sportsObjects = response.data))
+    	},
+    	check (e) {
+	  		this.$nextTick(() => {
+	     		if (e.target.checked) {
+       				axios
+       				.get('rest/objects/filterOpen')
+       				.then(response=>((this.sportsObjects = response.data)))
+    			}else{
+					axios
+       				.get('rest/objects/')
+       				.then(response=>((this.sportsObjects = response.data)))
+			}		
+	  })
+	}
 	},
-    computed: {
-    filteredResources (){
-      if(this.searchQuery){		
-      return this.sportsObjects.filter((item)=>{		
-		if(item.name.toLowerCase().startsWith(this.searchQuery.toLowerCase())){			
-			return item;
-		}else if (item.averageRating.toString().startsWith(this.searchQuery)){
-			return item;
-		}else if (item.content.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
-			return item;
-		}else if (item.location.address.state.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
-			return item;
-		}
-		else if (item.location.address.place.toLowerCase().startsWith(this.searchQuery.toLowerCase())){
-			return item;
-		}
-      })
-      } else{
-        return this.sportsObjects;
-      }
-    }
-  }
+    
+  
    	
     
 });

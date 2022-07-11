@@ -126,18 +126,18 @@ Vue.component("sportsObjects", {
        		axios
        		.get('rest/objects/filter/'+event.target.value)
        		.then(response=>(this.sportsObjects = response.data))
-    },
-    check (e) {
-	  this.$nextTick(() => {
-	     if (e.target.checked) {
-       		axios
-       		.get('rest/objects/filterOpen')
-       		.then(response=>((this.sportsObjects = response.data)))
-    	}else{
-			axios
-       		.get('rest/objects/')
-       		.then(response=>((this.sportsObjects = response.data)))
-		}
+    	},
+    	check (e) {
+	  		this.$nextTick(() => {
+	     		if (e.target.checked) {
+       				axios
+       				.get('rest/objects/filterOpen')
+       				.then(response=>((this.sportsObjects = response.data)))
+    			}else{
+					axios
+       				.get('rest/objects/')
+       				.then(response=>((this.sportsObjects = response.data)))
+			}		
 	  })
 	}
 		
