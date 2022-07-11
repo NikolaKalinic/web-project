@@ -17,6 +17,7 @@ const AddNewManager = { template: '<add-new-manager></add-new-manager>'}
 const newContent = { template: '<new-content></new-content'}
 const changeContent = { template : '<change-content></change-content'}
 const addNewContentTraining = { template : '<new-content-training></new-content-training>'}
+const addNewTraining = { template: '<new-training></new-training>'}
 
 
 const router = new VueRouter({
@@ -39,7 +40,9 @@ const router = new VueRouter({
 	    { path: '/add-new-manager', component:AddNewManager},
 	    { path: '/new-content/:id', component: newContent},
 	    { path: '/change-content/:id', component: changeContent},
-	    { path: '/new-content-training/:id', component: addNewContentTraining}
+	    { path: '/new-content-training/:id', component: addNewContentTraining},
+	    { path: '/new-content-training/:id', component: addNewContentTraining},
+	    { path: '/new-training', component: addNewTraining}
 
 	  ]
 });

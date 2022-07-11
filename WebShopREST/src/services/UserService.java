@@ -91,6 +91,15 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getFreeManagers();
 	}
+	
+	@GET
+	@Path("/coaches")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getCoaches(){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getCoaches();
+	}
+	
 	@GET
 	@Path("/exists/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -174,13 +183,13 @@ public class UserService {
 	}
 	
 	@PUT
-	@Path("/trainings-{username}")
+	@Path("/trainings-{id}-{trainingId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(@PathParam("username") String username, int trainingId) {
+	public void update(@PathParam("id") int id, @PathParam("trainingId") int trainingId) {
 		
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
-		dao.updateTrainings(username, trainingId);		
+		dao.updateTrainings(id, trainingId);		
 		
 	}
 	
