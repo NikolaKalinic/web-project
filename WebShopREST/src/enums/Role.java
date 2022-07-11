@@ -1,5 +1,5 @@
 package enums;
 
 public enum Role {
-	Admin,Manager,Coach,Customer
+	Admin,Manager,Coach,Customer,None
 }

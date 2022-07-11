@@ -16,6 +16,8 @@ import beans.MembershipFee;
 import beans.SportObject;
 import beans.TrainingHistory;
 import beans.User;
+import dto.SearchObjectDTO;
+import dto.SearchUserDTO;
 import enums.Role;
 
 public class UserDAO {
@@ -102,7 +104,15 @@ public class UserDAO {
 		}
 		return retVal;
 	}
-	
+	public ArrayList<User> filterRole(Role role){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u : users) {
+			if(u.getRole() == role) {
+				retVal.add(u);
+			}
+		}
+		return retVal;
+	}
 	public ArrayList<User> getFreeManagers(){
 		ArrayList<User> retVal = new ArrayList<User>();
 		for(User u: users) {
@@ -143,6 +153,17 @@ public class UserDAO {
 		}
 	}
 	
+	public ArrayList<User> search(SearchUserDTO dto){
+		ArrayList<User> retVal = new ArrayList<User>();
+		for(User u: users) {
+			if(u.getFirstName().toLowerCase().startsWith(dto.getSearchName().toLowerCase())   &&
+			   u.getLastName().toLowerCase().startsWith(dto.getSearchSurname().toLowerCase()) &&
+			   u.getUsername().toLowerCase().startsWith(dto.getSearchUsername().toLowerCase())) {
+				retVal.add(u);				
+			}
+		}
+		return retVal;
+	}
 	public boolean checkDoesExists(String username) {
 		boolean exists = false;
 		for(User u : users) {

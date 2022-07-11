@@ -4,7 +4,8 @@ Vue.component("users",{
 			users: null,
 			searchSurname: '',
 	     	searchName: '',
-	     	searchUsername: ''
+	     	searchUsername: '',
+	     	role:null
 		}
 	},
 	template: `
@@ -37,14 +38,28 @@ Vue.component("users",{
 		    			<div>
 		    				<button class="btn btn-primary form-control my-2 py-1" v-on:click="addNewUser()">Add new user</button>
 		    			</div>	
-		    			<div class="col-4">
+		    			<div class="col-2">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
 		    			</div>
-		    			<div class="col-3">
+		    			<div class="col-2">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchSurname" placeholder="Surname..." />
 		    			</div>
-		    			<div class="col-3">
+		    			<div class="col-2">
 		    				<input class="form-control my-2 py-1" type="text" v-model="searchUsername" placeholder="Username..." />
+		    			</div>
+		    			<div class="col-2">
+		    				<select  id="type" placeholder="Role..." v-model="role" @change="onChange($event)" class="browser-default form-control form-control-lg">
+		    				<option value="None" selected>None</option>
+							  <option value="Admin">Admin</option>
+							  <option value="Customer">Customer</option>
+							  <option value="Coach">Coach</option>
+							  <option value="Manager">Manager</option>
+							</select>
+		    			</div>
+		    			<div class="col-1">
+		    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
+					          <span class="glyphicon glyphicon-search"></span> Search 
+					        </button>
 		    			</div>
 		    		</div>
 		    		<div class="row">
@@ -61,7 +76,7 @@ Vue.component("users",{
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="u in filteredResources">
+				    		<tr v-for="u in users">
 				    			<td>{{u.firstName}}</td>
 				    			<td>{{u.lastName}}</td>
 				    			<td>{{u.username}}</td>
@@ -81,38 +96,25 @@ Vue.component("users",{
 		.get('rest/users')
 		.then(response => (this.users = response.data))
 	},	
-	computed: {
-    filteredResources (){
-      if(this.searchName){		
-      return this.users.filter((item)=>{		
-		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
-		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
-			return item;
-		}
-      })
-      } if(this.searchSurname){		
-      return this.users.filter((item)=>{		
-		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
-		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
-			return item;
-		}
-      })
-      } if(this.searchUsername){		
-      return this.users.filter((item)=>{		
-		if(item.firstName.toLowerCase().startsWith(this.searchName.toLowerCase()) && item.lastName.toLowerCase().startsWith(this.searchSurname.toLowerCase())
-		&& item.username.toLowerCase().startsWith(this.searchUsername.toLowerCase())){			
-			return item;
-		}
-      })
-      }
-       else{
-        return this.users;
-      }
-    }
-  },
+	
    methods: {
     	addNewUser : function() {
     		router.push(`/add-new-user`);
-    	}
+    	},
+    	search: function(){
+			axios
+			.put('rest/users/search',
+			{
+				"searchSurname":this.searchSurname,
+				"searchName": this.searchName,
+				"searchUsername": this.searchUsername
+			})
+			.then(response =>(this.users= response.data))
+		},
+		onChange: function(event){
+       		axios
+       		.get('rest/users/filterRole'+event.target.value)
+       		.then(response=>(this.users = response.data))
+    		}
     }
 });

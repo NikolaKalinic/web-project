@@ -23,6 +23,9 @@ import beans.TrainingHistory;
 import beans.User;
 import dao.SportObjectDAO;
 import dao.UserDAO;
+import dto.SearchObjectDTO;
+import dto.SearchUserDTO;
+import enums.Role;
 
 @Path("/users")
 public class UserService {
@@ -128,6 +131,19 @@ public class UserService {
 		dao.deleteByUsername(username);
 	}
 	
+	@GET
+	@Path("/filterRole{role}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<User> filterRole(@PathParam("role") Role role){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		if(role.toString().equals("None"))
+			return (ArrayList<User>)getAll();
+		else
+			return dao.filterRole(role);
+	}
+			
+	
 	@PUT
 	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -142,6 +158,15 @@ public class UserService {
 			return Response.status(200).build();
 		}	
 	}
+	@PUT
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<User> search(SearchUserDTO dto){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.search(dto);
+	}
+	
 	@PUT
 	@Path("/sportObjId={id}")
 	@Produces(MediaType.APPLICATION_JSON)
