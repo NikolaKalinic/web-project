@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private String dateOfBirth;
 	private Role role;
 	private String email; //NIJE PO SPECIFIKACIJI
+	private boolean deleted;
 	
 	//customer
 	private MembershipFee membershipFee;
@@ -99,6 +100,15 @@ public class User implements Serializable {
 		this.sportObjectId = sportObjectId;
 	}
 	
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public int getId() {
 		return id;
 	}

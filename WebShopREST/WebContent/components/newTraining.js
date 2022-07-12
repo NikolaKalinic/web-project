@@ -17,7 +17,7 @@ Vue.component("new-training", {
 			    <div class="topnav">
 				  <a href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/training">Training</a>
-				  <a href="/web-project/#/my-object">My object</a>
+				  <a href="/web-project/#/membership-fee">Membership fee</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
 			      <a href="/web-project/#/myProfile" v-on:click="myProfile()"><span class="glyphicon glyphicon-user"></span> My profile<li></a>

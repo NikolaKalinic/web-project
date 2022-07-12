@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
 import beans.MembershipFee;
+import beans.PromoCode;
 import beans.SportObject;
 import beans.TrainingHistory;
 import beans.User;
@@ -49,6 +50,7 @@ public class UserDAO {
 	
 	public void create(User u) throws FileNotFoundException {
 		u.setId(getNewId());
+		u.setDeleted(false);
 		users.add(u);
 		toJSON(pathToFile+"users.json");
 	}
@@ -300,6 +302,20 @@ public class UserDAO {
 				u.setSportObjectId(objId);
 				toJSON(pathToFile+"users.json");
 			}
+		}
+	}
+	
+	public void deleteUser(int id) {
+		for(User s: users) {
+			if(s.getId() == id) {
+				s.setDeleted(true);
+			}
+		}
+		try {
+			toJSON(pathToFile+"users.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
 		}
 	}
 	

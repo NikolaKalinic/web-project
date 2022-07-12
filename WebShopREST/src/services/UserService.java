@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import beans.MembershipFee;
 import beans.TrainingHistory;
 import beans.User;
+import dao.PromoCodeDAO;
 import dao.SportObjectDAO;
 import dao.UserDAO;
 import dto.SearchObjectDTO;
@@ -238,6 +239,16 @@ public class UserService {
 	public void updateObjectForManager(@PathParam("objId") int objId, @PathParam("userId") int userId) throws FileNotFoundException {	
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");		
 		dao.updateObjectForManager(objId, userId);		
+		
+	}
+	
+	@PUT
+	@Path("/delete-{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteUser(@PathParam("id") int id) {		
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.deleteUser(id);	
 		
 	}
 }

@@ -20,7 +20,7 @@ Vue.component("home", {
 			      <a class="navbar-brand" href="#">Fitness</a>
 			    </div>
 			    <div class="topnav">
-				  <a class="active" href="/web-project/#/home">Sport Object</a>
+				  <a class="active" href="/web-project/#/home">Sports Objects</a>
 				  <a href="/web-project/#/training">Training</a>
 				  <a href="/web-project/#/membership-fee">Membership fee</a>
 				</div>

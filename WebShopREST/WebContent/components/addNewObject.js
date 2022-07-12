@@ -15,7 +15,7 @@ Vue.component("add-new-object",{
 			    </div>
 			    <div class="topnav">
 				  <a href="/web-project/#/home">Sports Objects</a>
-				  <a class="active" href="/web-project/#/users">Users</a>
+				  <a href="/web-project/#/users">Users</a>
 				  <a href="/web-project/#/promo-code">Promo Code</a>
 				</div>
 			    <div class="nav navbar-nav navbar-right">
