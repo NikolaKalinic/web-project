@@ -243,6 +243,11 @@ Vue.component("training", {
 			
 		},
 		newTraining: function(){
+			if(this.user.membershipFee.expirationDate < new Date()){
+				alert('Inactive membership fee!')
+				return;
+			}
+			
 			router.push('/new-training');
 		}
 		

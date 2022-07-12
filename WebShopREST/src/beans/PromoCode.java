@@ -10,7 +10,7 @@ public class PromoCode {
 	private Date dateEnd;
 	private int numberOfUse;
 	private int percentage;
-	
+	private boolean deleted;
 	
 	
 	public PromoCode() {
@@ -24,6 +24,13 @@ public class PromoCode {
 		this.dateEnd = dateEnd;
 		this.numberOfUse = numberOfUse;
 		this.percentage = percentage;
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	public int getId() {
 		return id;

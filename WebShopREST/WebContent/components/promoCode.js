@@ -92,15 +92,17 @@ Vue.component("promo-code",{
 				    			<th>Name</th>
 				    			<th>Period</th>
 				    			<th>Number of use</th>
-				    			<th>Sale</th>				    				
+				    			<th>Sale</th>
+				    			<th>More</th>				    				
 				    		</tr>
 				    		</thead>
 				    		<tbody>
-				    		<tr v-for="pc in promoCodes" v-if="pc.dateEnd > new Date()">
+				    		<tr v-for="pc in promoCodes" v-if="pc.dateEnd > new Date() && pc.deleted == false">
 				    			<td>{{pc.name}}</td>
 				    			<td>{{pc.dateStart | dateFormat('DD.MM.YYYY.')}} - {{pc.dateEnd | dateFormat('DD.MM.YYYY.')}}</td>
 				    			<td>{{pc.numberOfUse}}</td>
-				    			<td>{{pc.percentage}}%</td>				    				
+				    			<td>{{pc.percentage}}%</td>		
+				    			<td><button type="button" v-on:click="deletePromoCode(pc.id)" class="btn btn-light btn-sm">Delete</button></td>		    				
 				    		</tr>
 				    		</tbody>
 				    	</table>    
@@ -150,6 +152,18 @@ Vue.component("promo-code",{
 			this.dateEnd = null;
 			this.numberOfUse = null;
 			this.percentage = null;
+		},
+		deletePromoCode: function(id){
+			r = confirm("Are you sure?")
+			if(r){
+			axios
+			.put('rest/promo-code/delete-' + id)
+			.then(response => 	axios
+								.get('rest/promo-code')
+								.then(response => (this.promoCodes = response.data)))	
+			}
+			
+			
 		}
 		 
 		

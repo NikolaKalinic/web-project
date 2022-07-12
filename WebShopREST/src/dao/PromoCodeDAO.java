@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonReader;
 
 import Personal.PersonalConfig;
 import beans.PromoCode;
+import beans.Training;
 
 public class PromoCodeDAO {
 
@@ -41,6 +42,7 @@ public class PromoCodeDAO {
     
     public void create(PromoCode s) throws FileNotFoundException {
 		s.setId(getNewId());
+		s.setDeleted(false);
 		promoCodes.add(s);
 		toJSON(pathToFile+"promoCodes.json");
 	}
@@ -96,6 +98,20 @@ public class PromoCodeDAO {
 				promoCodes.remove(i);
 				toJSON(pathToFile+"promoCodes.json");
 			}
+		}
+	}
+	
+	public void deletePromoCode(int id) {
+		for(PromoCode s: promoCodes) {
+			if(s.getId() == id) {
+				s.setDeleted(true);
+			}
+		}
+		try {
+			toJSON(pathToFile+"promoCodes.json");
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("NIsam uspeo update");
 		}
 	}
 }
