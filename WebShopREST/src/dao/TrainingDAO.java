@@ -79,7 +79,35 @@ public class TrainingDAO {
 			return result;
 		}
 	}
+
+	public ArrayList<Training> filterObjType(String type,SportObjectDAO daoObj){
+		ArrayList<Training> retVal = new ArrayList<Training>();
+		for(Training t: trainings) {
+			if(daoObj.getById(t.getSportObject())!=null && daoObj.getById(t.getSportObject()).getType().toString().equals(type)) {
+				retVal.add(t);
+			}
+		}
+		return retVal;
+	}
 	
+	public ArrayList<Training> search(String name){
+		ArrayList<Training> retVal = new ArrayList<Training>();
+		for(Training t: trainings) {
+			if(t.getName().toLowerCase().startsWith(name.toLowerCase())) {
+				retVal.add(t);
+			}
+		}
+		return retVal;
+	}
+	public ArrayList<Training> filterType(String type){
+		ArrayList<Training> retVal = new ArrayList<Training>();
+		for(Training t: trainings) {
+			if(t.getType().toString().equals(type)) {
+				retVal.add(t);
+			}
+		}
+		return retVal;
+	}
 	public Training getById(int wantedId) {
 		for(Training s : trainings) {
 			if(s.getId() == wantedId)

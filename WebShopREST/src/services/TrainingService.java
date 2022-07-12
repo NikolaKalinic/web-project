@@ -1,6 +1,7 @@
 package services;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,7 @@ import beans.Training;
 import dao.SportObjectDAO;
 import dao.TrainingDAO;
 import dao.UserDAO;
+import dto.SearchObjectDTO;
 
 @Path("/trainings")
 public class TrainingService {
@@ -58,7 +60,28 @@ public class TrainingService {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
 		return dao.getById(id);
 	}
-	
+
+	@GET
+	@Path("/filterType/{type}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> filterType(@PathParam("type") String type){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		if(type.equals("None"))
+			return getAll();
+		else
+			return dao.filterType(type);
+	}
+	@GET
+	@Path("/filterObj/{type}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> filterObjType(@PathParam("type") String type){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		SportObjectDAO daoObj = (SportObjectDAO) ctx.getAttribute("sportObjectDAO");
+		if(type.equals("None"))
+			return getAll();
+		else
+			return dao.filterObjType(type,daoObj);
+	}
 	@GET
 	@Path("/getByCoach-{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -81,11 +104,17 @@ public class TrainingService {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public int create(Training s) throws FileNotFoundException {
-		System.out.println("USAO SAM");
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
 		return dao.create(s);
 	}
 	
+	@PUT
+	@Path("/search/{dto}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Training> search(@PathParam("dto") String dto){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.search(dto);
+	}
 	
 	@DELETE
 	@Path("/{id}")

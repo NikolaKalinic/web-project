@@ -9,7 +9,8 @@ Vue.component("training", {
 			mode: "PERSONAL",
 			users: null,
 			customerName: null,
-			menagerSportObject: null
+			menagerSportObject: null,
+			searchName:null
 			
 			
 		}
@@ -85,7 +86,25 @@ Vue.component("training", {
 			<div class="container">
 				<div class="row" v-if="user.role == 'Customer'">
 		    		<div class="col">
-		    			<button type="button" v-on:click="newTraining()" class="btn btn-primary" >Add new training</button>		    					    			
+		    			<button type="button" v-on:click="newTraining()" class="btn btn-primary" >Add new training</button>
+		    			<div class="row">	
+			    			<div class="col-2">
+			    				<select  id="type" v-model="type" @change="onChange($event)" class="browser-default custom-select form-control form-control-lg">
+			    				<option value="None">None</option>
+								  <option value="Personal">Personal</option>
+								  <option value="Group">Group</option>
+								</select>
+			    			</div>	    
+			    			<div class="col-2">
+			    				<select  id="type" v-model="type" @change="onChangeObjType($event)" class="browser-default custom-select form-control form-control-lg">
+			    				<option value="None">None</option>
+								  <option value="Gym">Gym</option>
+								  <option value="Pool">Pool</option>
+								  <option value="SportCenter">SportCenter</option>
+								  <option value="DanceStudio">DanceStudio</option>
+								</select>
+			    			</div>
+			    		</div>					    			
 			    		<table class="table table-striped table-dark">
 			    			<thead>
 				    		<tr>
@@ -114,7 +133,27 @@ Vue.component("training", {
 			    		<button v-on:click="groupMode()" type="button" class="btn btn-secondary">Group trainings</button>
 			    		<h1 v-if="mode == 'GROUP' ">Group trainings</h1>
 			    		<h1 v-else-if="mode == 'PERSONAL' ">Personal trainings</h1>
+			    		<div class="row">
+				    		<div class="col-2">
+			    				<select  id="type" v-model="type" @change="onChangeObjType($event)" class="browser-default custom-select form-control form-control-lg">
+			    				<option value="None">None</option>
+								  <option value="Gym">Gym</option>
+								  <option value="Pool">Pool</option>
+								  <option value="SportCenter">SportCenter</option>
+								  <option value="DanceStudio">DanceStudio</option>
+								</select>
+			    			</div>
+			    			<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
+		    				</div>
+		    				<div class="col-1">
+			    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
+						          <span class="glyphicon glyphicon-search"></span> Search 
+						        </button>
+		    				</div>
+			    		</div>
 			    	</div class="col-sm">
+			    	
 			    </div>
 			    <div class="row" v-if="user.role == 'Coach' && this.mode == 'GROUP'">
 		    		<table class="table table-striped table-dark">
@@ -244,8 +283,28 @@ Vue.component("training", {
 		},
 		newTraining: function(){
 			router.push('/new-training');
-		}
-		
+		},
+		onChange:function(event){
+       		axios
+       		.get('rest/trainings/filterType/'+event.target.value)
+       		.then(response=>(this.trainings = response.data))
+    	},
+    	onChangeObjType:function(event){
+       		axios
+       		.get('rest/trainings/filterObj/'+event.target.value)
+       		.then(response=>{if(this.user.role=="Customer")
+       							this.trainings = response.data;
+       						else
+       							this.coachTrainings = response.data;});
+    	},
+		search: function(){
+			axios
+			.get('rest/trainings/search/'+this.searchName)
+			.then(response =>{if(this.user.role=="Customer")
+       							this.trainings = response.data;
+       						else
+       							this.coachTrainings = response.data;});
+		},
 		
 	 },
 	 
