@@ -1,6 +1,7 @@
 package services;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,6 +25,7 @@ import dao.SportObjectDAO;
 import dao.TrainingDAO;
 import dao.UserDAO;
 import dto.SearchObjectDTO;
+import dto.SearchTrainingDTO;
 
 @Path("/trainings")
 public class TrainingService {
@@ -109,9 +111,9 @@ public class TrainingService {
 	}
 	
 	@PUT
-	@Path("/search/{dto}")
+	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Training> search(@PathParam("dto") String dto){
+	public ArrayList<Training> search(SearchTrainingDTO dto) throws ParseException{
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
 		return dao.search(dto);
 	}

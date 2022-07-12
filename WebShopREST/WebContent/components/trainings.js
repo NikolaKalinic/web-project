@@ -10,9 +10,9 @@ Vue.component("training", {
 			users: null,
 			customerName: null,
 			menagerSportObject: null,
-			searchName:null
-			
-			
+			searchName:'',
+			searchThan:'',
+			searchTo:''
 		}
 	},
 	template:`
@@ -104,6 +104,20 @@ Vue.component("training", {
 								  <option value="DanceStudio">DanceStudio</option>
 								</select>
 			    			</div>
+			    			<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
+		    				</div>
+		    				<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchThan" placeholder="Than...(dd.mm.yyyy)" />
+		    				</div>
+		    				<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchTo" placeholder="To...(dd.mm.yyyy)" />
+		    				</div>
+		    				<div class="col-1">
+			    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
+						          <span class="glyphicon glyphicon-search"></span> Search 
+						        </button>
+		    				</div>
 			    		</div>					    			
 			    		<table class="table table-striped table-dark">
 			    			<thead>
@@ -145,6 +159,12 @@ Vue.component("training", {
 			    			</div>
 			    			<div class="col-2">
 		    					<input class="form-control my-2 py-1" type="text" v-model="searchName" placeholder="Name..." />
+		    				</div>
+		    				<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchThan" placeholder="Than...(dd.mm.yyyy)" />
+		    				</div>
+		    				<div class="col-2">
+		    					<input class="form-control my-2 py-1" type="text" v-model="searchTo" placeholder="To...(dd.mm.yyyy)" />
 		    				</div>
 		    				<div class="col-1">
 			    				<button v-on:click="search()" type="button" class="btn btn-default btn-sm">
@@ -304,7 +324,11 @@ Vue.component("training", {
     	},
 		search: function(){
 			axios
-			.get('rest/trainings/search/'+this.searchName)
+			.put('rest/trainings/search',{
+				"name":this.searchName,
+				"than":this.searchThan,
+				"to":this.searchTo
+			})
 			.then(response =>{if(this.user.role=="Customer")
        							this.trainings = response.data;
        						else

@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.xml.bind.ParseConversionEvent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,6 +19,7 @@ import Personal.PersonalConfig;
 import beans.Content;
 import beans.SportObject;
 import beans.Training;
+import dto.SearchTrainingDTO;
 
 public class TrainingDAO {
 
@@ -90,11 +96,38 @@ public class TrainingDAO {
 		return retVal;
 	}
 	
-	public ArrayList<Training> search(String name){
+	private Date getDate(String date) throws ParseException {
+//		int year = Integer. parseInt(date.split(".")[1].split(".")[1]);
+//		int mounth = Integer. parseInt(date.split(".")[1].split(".")[0]);
+//		int day = Integer. parseInt(date.split(".")[0]);
+//		return new Date(year,mounth,day); 
+	    Date date1=new SimpleDateFormat("dd.MM.yyyy").parse(date); 
+	    return date1;
+	}
+	public ArrayList<Training> search(SearchTrainingDTO dto) throws ParseException{
 		ArrayList<Training> retVal = new ArrayList<Training>();
 		for(Training t: trainings) {
-			if(t.getName().toLowerCase().startsWith(name.toLowerCase())) {
-				retVal.add(t);
+			if(!dto.getThan().equals("") && !dto.getTo().equals("") && t.getDateTime() !=null) {
+				Date than = getDate(dto.getThan());
+				Date to = getDate(dto.getTo());
+				if(t.getName().toLowerCase().startsWith(dto.getName().toLowerCase()) &&
+						t.getDateTime().after(than) && t.getDateTime().before(to)) {
+					retVal.add(t);
+				}
+			}else if(!dto.getThan().equals("") && t.getDateTime() !=null){
+				Date than = getDate(dto.getThan());
+				if(t.getDateTime().after(than) && t.getName().toLowerCase().startsWith(dto.getName().toLowerCase())) {
+					retVal.add(t);
+				}
+			}else if( !dto.getTo().equals("") && t.getDateTime() !=null) {
+				Date to = getDate(dto.getTo());
+				if(t.getDateTime().before(to) && t.getName().toLowerCase().startsWith(dto.getName().toLowerCase())) {
+					retVal.add(t);
+				}
+			}
+			else {
+				if(t.getName().toLowerCase().startsWith(dto.getName().toLowerCase()))
+						retVal.add(t);
 			}
 		}
 		return retVal;
